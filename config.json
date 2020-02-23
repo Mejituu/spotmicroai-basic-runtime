@@ -1,0 +1,162 @@
+{
+    "abort_controller": [
+        {
+            "gpio_port": 17
+        }
+    ],
+    "motion_controller": [
+        {
+            "boards": [
+                {
+                    "pca9685_1": [
+                        {
+                            "address": "0x40",
+                            "reference_clock_speed": 25000000,
+                            "frequency": 50
+                        }
+                    ],
+                    "pca9685_2": [
+                        {
+                            "address": "0x42",
+                            "reference_clock_speed": 25000000,
+                            "frequency": 50
+                        }
+                    ]
+                }
+            ],
+            "servos": [
+                {
+                    "rear_shoulder_left": [
+                        {
+                            "pca9685": 1,
+                            "channel": 0,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "rear_leg_left": [
+                        {
+                            "pca9685": 2,
+                            "channel": 0,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "rear_feet_left": [
+                        {
+                            "pca9685": 1,
+                            "channel": 2,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "rear_shoulder_right": [
+                        {
+                            "pca9685": 1,
+                            "channel": 3,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "rear_leg_right": [
+                        {
+                            "pca9685": 1,
+                            "channel": 4,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "rear_feet_right": [
+                        {
+                            "pca9685": 1,
+                            "channel": 5,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "front_shoulder_left": [
+                        {
+                            "pca9685": 1,
+                            "channel": 6,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "front_leg_left": [
+                        {
+                            "pca9685": 1,
+                            "channel": 7,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "front_feet_left": [
+                        {
+                            "pca9685": 1,
+                            "channel": 8,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "front_shoulder_right": [
+                        {
+                            "pca9685": 1,
+                            "channel": 9,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "front_leg_right": [
+                        {
+                            "pca9685": 1,
+                            "channel": 10,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ],
+                    "front_feet_right": [
+                        {
+                            "pca9685": 1,
+                            "channel": 11,
+                            "min_pulse": 500,
+                            "max_pulse": 2500,
+                            "max_valid_angle": 180,
+                            "min_valid_angle": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "lcd_screen_controller": [
+        {
+            "lcd_screen": [
+                {
+                    "address": "0x27"
+                }
+            ]
+        }
+    ]
+}
