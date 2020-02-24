@@ -25,16 +25,21 @@ pca9685_1_reference_clock_speed = int(Config().get(
 pca9685_1_frequency = int(
     Config().get('motion_controller[*].boards[*].pca9685_1[*].frequency | [0] | [0] | [0]'))
 
-pca9685_2_address = int(
-    Config().get('motion_controller[*].boards[*].pca9685_2[*].address | [0] | [0] | [0]'), 0)
 boards = 1
 
-if pca9685_2_address:
-    pca9685_2_reference_clock_speed = int(Config().get(
-        'motion_controller[*].boards[*].pca9685_2[*].reference_clock_speed | [0] | [0] | [0]'))
-    pca9685_2_frequency = int(Config().get(
-        'motion_controller[*].boards[*].pca9685_2[*].frequency | [0] | [0] | [0]'))
-    boards = 2
+try:
+    pca9685_2_address = int(
+        Config().get('motion_controller[*].boards[*].pca9685_2[*].address | [0] | [0] | [0]'), 0)
+
+    if pca9685_2_address:
+        pca9685_2_reference_clock_speed = int(Config().get(
+            'motion_controller[*].boards[*].pca9685_2[*].reference_clock_speed | [0] | [0] | [0]'))
+        pca9685_2_frequency = int(Config().get(
+            'motion_controller[*].boards[*].pca9685_2[*].frequency | [0] | [0] | [0]'))
+        boards = 2
+
+except:
+    log.error("Second PCA not found")
 
 log.info('Use the command "i2cdetect -y 1" to list your i2c devices connected and')
 log.info('write your pca9685 i2c address(es) and settings in your configuration file ~/spotmicroai.json')
