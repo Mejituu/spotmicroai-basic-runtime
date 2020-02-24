@@ -134,5 +134,14 @@
                 }
             ]
         }
+    ],
+    "remote_controller_controller": [
+        {
+            "remote_controller": [
+                {
+                    "device": "js0"
+                }
+            ]
+        }
     ]
 }

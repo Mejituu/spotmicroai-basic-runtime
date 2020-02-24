@@ -6,6 +6,7 @@ from fcntl import ioctl
 import signal
 import sys
 from spotmicro.utilities.log import Logger
+from spotmicro.utilities.config import Config
 
 log = Logger().setup_logger('Remote controller')
 
@@ -108,10 +109,14 @@ class RemoteControllerController:
                     break
 
     def check_for_connected_devices(self):
+
+        connected_device = Config().get('remote_controller_controller[0].remote_controller[0].device')
+
         log.info('Looking for connected devices')
         self.connected_device = False
         for fn in os.listdir('/dev/input'):
-            if fn.startswith('js'):
+            # if fn.startswith('js'):
+            if fn.startswith(str(connected_device)):
                 self.connected_device = True
 
                 # These constants were borrowed from linux/input.h
@@ -187,7 +192,8 @@ class RemoteControllerController:
                 }
 
                 # Open the joystick device.
-                fn = '/dev/input/js0'
+                fn = '/dev/input/' + str(connected_device)
+
                 log.debug(('Opening %s...' % fn))
                 self.jsdev = open(fn, 'rb')
 

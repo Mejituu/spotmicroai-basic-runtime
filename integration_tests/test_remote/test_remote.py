@@ -17,7 +17,7 @@ print('Available devices:')
 
 for fn in os.listdir('/dev/input'):
     if fn.startswith('js'):
-        print(('  /dev/input/%s' % (fn)))
+        log.info(('  /dev/input/%s' % (fn)))
 
 # We'll store the states here.
 axis_states = {}
@@ -99,7 +99,9 @@ axis_map = []
 button_map = []
 
 # Open the joystick device.
-fn = '/dev/input/js0'
+
+connected_device = Config().get('remote_controller_controller[0].remote_controller[0].device')
+fn = '/dev/input/' + str(connected_device)
 print(('Opening %s...' % fn))
 jsdev = open(fn, 'rb')
 
