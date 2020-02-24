@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yes | sudo cp -rf systemd/spotmicroai.service /etc/systemd/system/spotmicroai.service
+yes | sudo cp -rf ~/spotmicroai/systemd/spotmicroai.service /etc/systemd/system/spotmicroai.service
 
 sudo systemctl enable spotmicroai.service;
 
