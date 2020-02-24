@@ -2,6 +2,7 @@ import json
 import sys
 from spotmicro.utilities.log import Logger
 import jmespath  # http://jmespath.org/tutorial.html
+from pathlib import Path
 
 log = Logger().setup_logger('Configuration')
 
@@ -31,7 +32,7 @@ class Config(metaclass=Singleton):
 
     def load_config(self):
         try:
-            with open('config.json') as json_file:
+            with open('~/spotmicroai.json') as json_file:
                 self.values = json.load(json_file)
                 # log.debug(json.dumps(self.values, indent=4, sort_keys=True))
 
@@ -44,7 +45,7 @@ class Config(metaclass=Singleton):
 
     def save_config(self):
         try:
-            with open('config.json', 'w') as outfile:
+            with open('~/spotmicroai.json', 'w') as outfile:
                 json.dump(self.values, outfile)
         except Exception as e:
             log.error("Problem saving the configuration file", e)

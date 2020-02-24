@@ -20,6 +20,11 @@ from adafruit_pca9685 import PCA9685
 from adafruit_motor import servo
 import time
 
+from spotmicro.utilities.log import Logger
+from spotmicro.utilities.config import Config
+
+log = Logger().setup_logger('Testing motion')
+
 try:
 
     i2c = busio.I2C(SCL, SDA)

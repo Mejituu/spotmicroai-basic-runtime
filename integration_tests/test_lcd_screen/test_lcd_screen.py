@@ -3,6 +3,11 @@
 import RPi_LCD_16x2_I2C_driver
 from time import *
 
+from spotmicro.utilities.log import Logger
+from spotmicro.utilities.config import Config
+
+log = Logger().setup_logger('Testing LCD screen')
+
 mylcd = RPi_LCD_16x2_I2C_driver.lcd()
 # test 2
 mylcd.lcd_display_string("RPi I2C test", 1)

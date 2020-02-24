@@ -31,9 +31,7 @@
                             "pca9685": 1,
                             "channel": 0,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "rear_leg_left": [
@@ -41,9 +39,7 @@
                             "pca9685": 2,
                             "channel": 0,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "rear_feet_left": [
@@ -51,9 +47,7 @@
                             "pca9685": 1,
                             "channel": 2,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "rear_shoulder_right": [
@@ -61,9 +55,7 @@
                             "pca9685": 1,
                             "channel": 3,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "rear_leg_right": [
@@ -71,9 +63,7 @@
                             "pca9685": 1,
                             "channel": 4,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "rear_feet_right": [
@@ -81,9 +71,7 @@
                             "pca9685": 1,
                             "channel": 5,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "front_shoulder_left": [
@@ -91,9 +79,7 @@
                             "pca9685": 1,
                             "channel": 6,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "front_leg_left": [
@@ -101,9 +87,7 @@
                             "pca9685": 1,
                             "channel": 7,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "front_feet_left": [
@@ -111,9 +95,7 @@
                             "pca9685": 1,
                             "channel": 8,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "front_shoulder_right": [
@@ -121,9 +103,7 @@
                             "pca9685": 1,
                             "channel": 9,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "front_leg_right": [
@@ -131,9 +111,7 @@
                             "pca9685": 1,
                             "channel": 10,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ],
                     "front_feet_right": [
@@ -141,9 +119,7 @@
                             "pca9685": 1,
                             "channel": 11,
                             "min_pulse": 500,
-                            "max_pulse": 2500,
-                            "max_valid_angle": 180,
-                            "min_valid_angle": 0
+                            "max_pulse": 2500
                         }
                     ]
                 }
