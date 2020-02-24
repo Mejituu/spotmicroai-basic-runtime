@@ -372,21 +372,21 @@ class MotionController:
 
     def rest_position(self):
 
-        self.servo_rear_shoulder_left.angle = 0
-        self.servo_rear_leg_left.angle = 75
-        self.servo_rear_feet_left.angle = 30
+        self.servo_rear_shoulder_left.angle = 90
+        self.servo_rear_leg_left.angle = 90
+        self.servo_rear_feet_left.angle = 90
 
-        self.servo_rear_shoulder_right.angle = 102
-        self.servo_rear_leg_right.angle = 120
-        self.servo_rear_feet_right.angle = 160
+        self.servo_rear_shoulder_right.angle = 90
+        self.servo_rear_leg_right.angle = 90
+        self.servo_rear_feet_right.angle = 90
 
-        self.servo_front_shoulder_left.angle = 105
-        self.servo_front_leg_left.angle = 65
-        self.servo_front_feet_left.angle = 40
+        self.servo_front_shoulder_left.angle = 90
+        self.servo_front_leg_left.angle = 90
+        self.servo_front_feet_left.angle = 90
 
-        self.servo_front_shoulder_right.angle = 105
-        self.servo_front_leg_right.angle = 140
-        self.servo_front_feet_right.angle = 165
+        self.servo_front_shoulder_right.angle = 90
+        self.servo_front_leg_right.angle = 90
+        self.servo_front_feet_right.angle = 90
 
     def move_to_position_xxx(self):
         pass
