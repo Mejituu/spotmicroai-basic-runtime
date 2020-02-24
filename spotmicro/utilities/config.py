@@ -1,7 +1,9 @@
 import json
 import sys
+import os
 from spotmicro.utilities.log import Logger
 import jmespath  # http://jmespath.org/tutorial.html
+import shutil
 from pathlib import Path
 
 log = Logger().setup_logger('Configuration')
@@ -32,7 +34,10 @@ class Config(metaclass=Singleton):
 
     def load_config(self):
         try:
-            with open('~/spotmicroai.json') as json_file:
+            if not os.path.exists(str(Path.home()) + '/spotmicroai.json'):
+                shutil.copyfile(str(Path.home()) + '/spotmicroai/spotmicroai.default', str(Path.home()) + '/spotmicroai.json')
+
+            with open(str(Path.home()) + '/spotmicroai.json') as json_file:
                 self.values = json.load(json_file)
                 # log.debug(json.dumps(self.values, indent=4, sort_keys=True))
 
