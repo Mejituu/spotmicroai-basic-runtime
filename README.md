@@ -1,6 +1,43 @@
-This is the SpotMicro runtime source code that you can run in the Raspberry Pi inside your SpotMicro
+# SpotMicroAI runtime source code
 
-SpotMicro uses Raspberry Pi, for Jetson Nano there is another repository https://gitlab.com/custom_robots/spotmicro
+This repo contains a basic os that let you move SpotMicroAI with a remote controller and a RaspberryPi
+
+If you are looking for simulation, please check the simulation repositories here: https://gitlab.com/custom_robots/spotmicroai
+
+## Start
+
+Enable I2C
+```
+sudo raspi-config
+```
+
+SelfInstall
+```
+curl https://gitlab.com/custom_robots/spotmicroai/basic-runtime/-/raw/master/install/self_install.sh | bash
+```
+Manual install
+* Copy the install/self_install.sh file to your spot using FileZilla client
+
+Test components individually
+
+```
+i2cdetect -y 1
+
+integration_test lcd_screen -> need to ask you for the i2c address, showing you the previous one configured, then will print and generate the config.json section needed
+
+
+integration_test pca9685 -> need to ask you the i2c address, showing you the previous one configured, then will generate the config.json section, also will ask for the min max ranges of the servos
+
+integration_test pca9685 -> servos -> will iterate over all locations in the board asking for each servo position in the robot, and center position, starts at 90º, then with the user input saves the config file
+to identify the servo it will move it from 80º to 100º
+
+
+integration_test abort_mechanism -> need to ask you which is the gpio port you have connected and will generate the config.json section needed, to test, we need the servos conf done first, power them all at 90º or whatever is the middle point the user told us, then shutdown them, and shut on them
+
+```
+
+
+
 
 Depending of your wiring you must configure in the code some I2C addresses and pins. Also if you are using less sensors you can just remove or comments those parts from the code.
 
@@ -112,6 +149,8 @@ How to add a dependency to your project
 
 
 Runtime tiene q tener
+
+    Para traer el sistema operativo usamos git, el usuario tiene q hacer un git clone, a partir de ahí todo es con git pull --force o similar para las actualizaciones
 
     Script de creación y activación de python, que hace el venv, isntalla los requirements.txt etc
 
