@@ -43,23 +43,24 @@ class MotionController:
             try:
                 pca9685_2_address = int(
                     Config().get('motion_controller[*].boards[*].pca9685_2[*].address | [0] | [0] | [0]'), 0)
+
+                if pca9685_2_address:
+                    pca9685_2_reference_clock_speed = int(Config().get(
+                        'motion_controller[*].boards[*].pca9685_2[*].reference_clock_speed | [0] | [0] | [0]'))
+                    pca9685_2_frequency = int(Config().get(
+                        'motion_controller[*].boards[*].pca9685_2[*].frequency | [0] | [0] | [0]'))
+
+                    self.pca9685_2 = PCA9685(self.i2c, address=pca9685_2_address,
+                                             reference_clock_speed=pca9685_2_reference_clock_speed)
+                    self.pca9685_2.frequency = pca9685_2_frequency
+
+                    self.boards = 2
+                    log.info("2 PCA9685 board detected")
+                #else:
+                #    log.info("1 PCA9685 board detected")
+
             except:
                 log.error("Only 1 pca present in the configuration")
-                
-            if pca9685_2_address:
-                pca9685_2_reference_clock_speed = int(Config().get(
-                    'motion_controller[*].boards[*].pca9685_2[*].reference_clock_speed | [0] | [0] | [0]'))
-                pca9685_2_frequency = int(Config().get(
-                    'motion_controller[*].boards[*].pca9685_2[*].frequency | [0] | [0] | [0]'))
-
-                self.pca9685_2 = PCA9685(self.i2c, address=pca9685_2_address,
-                                         reference_clock_speed=pca9685_2_reference_clock_speed)
-                self.pca9685_2.frequency = pca9685_2_frequency
-
-                self.boards = 2
-                log.info("2 PCA9685 board detected")
-            else:
-                log.info("1 PCA9685 board detected")
 
             # Setup servos
             servo_rear_shoulder_left_pca9685 = Config().get(
