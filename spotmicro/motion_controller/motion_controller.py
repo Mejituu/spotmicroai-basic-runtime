@@ -40,8 +40,12 @@ class MotionController:
                                      reference_clock_speed=pca9685_1_reference_clock_speed)
             self.pca9685_1.frequency = pca9685_1_frequency
 
-            pca9685_2_address = int(
-                Config().get('motion_controller[*].boards[*].pca9685_2[*].address | [0] | [0] | [0]'), 0)
+            try:
+                pca9685_2_address = int(
+                    Config().get('motion_controller[*].boards[*].pca9685_2[*].address | [0] | [0] | [0]'), 0)
+            except:
+                log.error("Only 1 pca present in the configuration")
+                
             if pca9685_2_address:
                 pca9685_2_reference_clock_speed = int(Config().get(
                     'motion_controller[*].boards[*].pca9685_2[*].reference_clock_speed | [0] | [0] | [0]'))
@@ -291,7 +295,7 @@ class MotionController:
                 try:
 
                     # If we don't get an order in 60 seconds we disable the robot.
-                    #event = self._motion_queue.get(block=True, timeout=30)
+                    # event = self._motion_queue.get(block=True, timeout=30)
                     event = self._motion_queue.get()
 
                     log.debug(event)
