@@ -1,138 +1,154 @@
 #!/home/pi/spotmicroai/venv/bin/python3 -u
 
-import RPi_LCD_16x2_I2C_driver
-from time import *
-
+from spotmicro.lcd_screen_controller import LCD_16x2_I2C_driver
 from spotmicro.utilities.log import Logger
 from spotmicro.utilities.config import Config
+import time
 
-log = Logger().setup_logger('Testing LCD screen')
+log = Logger().setup_logger('Test LCD Screen')
 
-mylcd = RPi_LCD_16x2_I2C_driver.lcd()
-# test 2
-mylcd.lcd_display_string("RPi I2C test", 1)
-mylcd.lcd_display_string(" Custom chars", 2)
+log.info('Testing LCD screen...')
 
-sleep(2)  # 2 sec delay
+i2c_address = Config().get('lcd_screen_controller[0].lcd_screen[0].address')
 
-mylcd.lcd_clear()
+log.info('Use the command "i2cdetect -y 1" to list your i2c devices connected and')
+log.info('write your lcd screen i2c address in your configuration file ~/spotmicroai.json')
+log.info('Current configuration value is: ' + str(i2c_address))
+input("Press Enter to start the tests...")
 
-# let's define a custom icon, consisting of 6 individual characters
-# 3 chars in the first row and 3 chars in the second row
-fontdata1 = [
-    # Char 0 - Upper-left
-    [0x00, 0x00, 0x03, 0x04, 0x08, 0x19, 0x11, 0x10],
-    # Char 1 - Upper-middle
-    [0x00, 0x1F, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00],
-    # Char 2 - Upper-right
-    [0x00, 0x00, 0x18, 0x04, 0x02, 0x13, 0x11, 0x01],
-    # Char 3 - Lower-left
-    [0x12, 0x13, 0x1b, 0x09, 0x04, 0x03, 0x00, 0x00],
-    # Char 4 - Lower-middle
-    [0x00, 0x11, 0x1f, 0x1f, 0x0e, 0x00, 0x1F, 0x00],
-    # Char 5 - Lower-right
-    [0x09, 0x19, 0x1b, 0x12, 0x04, 0x18, 0x00, 0x00],
-    # Char 6 - my test
-    [0x1f, 0x0, 0x4, 0xe, 0x0, 0x1f, 0x1f, 0x1f],
-]
+lcd_screen = LCD_16x2_I2C_driver.lcd(address=int(i2c_address, 0))
 
-# Load logo chars (fontdata1)
-mylcd.lcd_load_custom_chars(fontdata1)
 
-# Write first three chars to row 1 directly
-mylcd.lcd_write(0x80)
-mylcd.lcd_write_char(0)
-mylcd.lcd_write_char(1)
-mylcd.lcd_write_char(2)
-# Write next three chars to row 2 directly
-mylcd.lcd_write(0xC0)
-mylcd.lcd_write_char(3)
-mylcd.lcd_write_char(4)
-mylcd.lcd_write_char(5)
-sleep(2)
+def test_0():
+    log.info('Test0')
 
-mylcd.lcd_clear()
+    lcd_screen.lcd_clear()
 
-mylcd.lcd_display_string_pos("Testing", 1, 1)  # row 1, column 1
-sleep(1)
-mylcd.lcd_display_string_pos("Testing", 2, 3)  # row 2, column 3
-sleep(1)
-mylcd.lcd_clear()
+    lcd_screen.backlight(0)
+    time.sleep(1)
+    lcd_screen.backlight(1)
+    time.sleep(1)
 
-# Now let's define some more custom characters
-fontdata2 = [
-    # Char 0 - left arrow
-    [0x1, 0x3, 0x7, 0xf, 0xf, 0x7, 0x3, 0x1],
-    # Char 1 - left one bar
-    [0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10],
-    # Char 2 - left two bars
-    [0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18],
-    # Char 3 - left 3 bars
-    [0x1c, 0x1c, 0x1c, 0x1c, 0x1c, 0x1c, 0x1c, 0x1c],
-    # Char 4 - left 4 bars
-    [0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e],
-    # Char 5 - left start
-    [0x0, 0x1, 0x3, 0x7, 0xf, 0x1f, 0x1f, 0x1f],
-    # Char 6 -
-    # [ ],
-]
 
-# Load logo chars from the second set
-mylcd.lcd_load_custom_chars(fontdata2)
+def test_1():
+    log.info('Test1')
 
-block = chr(255)  # block character, built-in
+    lcd_screen.lcd_clear()
+    lcd_screen.lcd_display_string("1234567890123456", 1)
+    lcd_screen.lcd_display_string("1234567890123456", 2)
 
-# display two blocks in columns 5 and 6 (i.e. AFTER pos. 4) in row 1
-# first draw two blocks on 5th column (cols 5 and 6), starts from 0
-mylcd.lcd_display_string_pos(block * 2, 1, 4)
+    time.sleep(2)
 
-# 
-pauza = 0.2  # define duration of sleep(x)
-#
-# now draw cust. chars starting from col. 7 (pos. 6)
 
-pos = 6
-mylcd.lcd_display_string_pos(chr(1), 1, 6)
-sleep(pauza)
+def test_2():
+    log.info('Test2')
 
-mylcd.lcd_display_string_pos(chr(2), 1, pos)
-sleep(pauza)
+    lcd_screen.lcd_clear()
 
-mylcd.lcd_display_string_pos(chr(3), 1, pos)
-sleep(pauza)
+    fontdata1 = [
+        [0x00, 0x00, 0x03, 0x04, 0x08, 0x19, 0x11, 0x10],
+        [0x00, 0x1F, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00],
+        [0x00, 0x00, 0x18, 0x04, 0x02, 0x13, 0x11, 0x01],
+        [0x12, 0x13, 0x1b, 0x09, 0x04, 0x03, 0x00, 0x00],
+        [0x00, 0x11, 0x1f, 0x1f, 0x0e, 0x00, 0x1F, 0x00],
+        [0x09, 0x19, 0x1b, 0x12, 0x04, 0x18, 0x00, 0x00],
+        [0x1f, 0x0, 0x4, 0xe, 0x0, 0x1f, 0x1f, 0x1f],
+    ]
 
-mylcd.lcd_display_string_pos(chr(4), 1, pos)
-sleep(pauza)
+    lcd_screen.lcd_load_custom_chars(fontdata1)
 
-mylcd.lcd_display_string_pos(block, 1, pos)
-sleep(pauza)
+    # Write first three chars to row 1 directly
+    lcd_screen.lcd_write(0x80)
+    lcd_screen.lcd_write_char(0)
+    lcd_screen.lcd_write_char(1)
+    lcd_screen.lcd_write_char(2)
 
-# and another one, same as above, 1 char-space to the right
-pos = pos + 1  # increase column by one
+    # Write next three chars to row 2 directly
+    lcd_screen.lcd_write(0xC0)
+    lcd_screen.lcd_write_char(3)
+    lcd_screen.lcd_write_char(4)
+    lcd_screen.lcd_write_char(5)
 
-mylcd.lcd_display_string_pos(chr(1), 1, pos)
-sleep(pauza)
-mylcd.lcd_display_string_pos(chr(2), 1, pos)
-sleep(pauza)
-mylcd.lcd_display_string_pos(chr(3), 1, pos)
-sleep(pauza)
-mylcd.lcd_display_string_pos(chr(4), 1, pos)
-sleep(pauza)
-mylcd.lcd_display_string_pos(block, 1, pos)
-sleep(pauza)
+    time.sleep(1)
 
-#
-# now again load first set of custom chars - smiley
-mylcd.lcd_load_custom_chars(fontdata1)
+    for x in range(0, 14):
+        lcd_screen.lcd_clear()
+        lcd_screen.lcd_display_string_pos(chr(0), 1, x)
+        lcd_screen.lcd_display_string_pos(chr(1), 1, x + 1)
+        lcd_screen.lcd_display_string_pos(chr(2), 1, x + 2)
+        lcd_screen.lcd_display_string_pos(chr(3), 2, x)
+        lcd_screen.lcd_display_string_pos(chr(4), 2, x + 1)
+        lcd_screen.lcd_display_string_pos(chr(5), 2, x + 2)
+        time.sleep(0.5)
 
-mylcd.lcd_display_string_pos(chr(0), 1, 9)
-mylcd.lcd_display_string_pos(chr(1), 1, 10)
-mylcd.lcd_display_string_pos(chr(2), 1, 11)
-mylcd.lcd_display_string_pos(chr(3), 2, 9)
-mylcd.lcd_display_string_pos(chr(4), 2, 10)
-mylcd.lcd_display_string_pos(chr(5), 2, 11)
 
-sleep(2)
-mylcd.lcd_clear()
-sleep(1)
-mylcd.backlight(0)
+def test_3():
+    log.info('Test3')
+
+    lcd_screen.lcd_clear()
+
+    lcd_screen.lcd_display_string_pos("Testing", 1, 1)  # row 1, column 1
+    time.sleep(1)
+    lcd_screen.lcd_display_string_pos("Testing", 2, 3)  # row 2, column 3
+    time.sleep(1)
+
+
+def test_4():
+    fontdata2 = [
+        # Char 0 - left arrow
+        [0x1, 0x3, 0x7, 0xf, 0xf, 0x7, 0x3, 0x1],
+        # Char 1 - left one bar
+        [0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10],
+        # Char 2 - left two bars
+        [0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18],
+        # Char 3 - left 3 bars
+        [0x1c, 0x1c, 0x1c, 0x1c, 0x1c, 0x1c, 0x1c, 0x1c],
+        # Char 4 - left 4 bars
+        [0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e],
+        # Char 5 - left start
+        [0x0, 0x1, 0x3, 0x7, 0xf, 0x1f, 0x1f, 0x1f],
+    ]
+
+    lcd_screen.lcd_load_custom_chars(fontdata2)
+
+    block = chr(255)  # block character, built-in
+
+    # display two blocks in columns 5 and 6 (i.e. AFTER pos. 4) in row 1
+    # first draw two blocks on 5th column (cols 5 and 6), starts from 0
+    lcd_screen.lcd_display_string_pos(block, 1, 0)
+
+    for pos in range(0, 16):
+        lcd_screen.lcd_display_string_pos(chr(1), 1, pos)
+        lcd_screen.lcd_display_string_pos(chr(1), 2, pos)
+        time.sleep(0.1)
+
+        lcd_screen.lcd_display_string_pos(chr(2), 1, pos)
+        lcd_screen.lcd_display_string_pos(chr(2), 2, pos)
+        time.sleep(0.1)
+
+        lcd_screen.lcd_display_string_pos(chr(3), 1, pos)
+        lcd_screen.lcd_display_string_pos(chr(3), 2, pos)
+        time.sleep(0.1)
+
+        lcd_screen.lcd_display_string_pos(chr(4), 1, pos)
+        lcd_screen.lcd_display_string_pos(chr(4), 2, pos)
+        time.sleep(0.1)
+
+        lcd_screen.lcd_display_string_pos(block, 1, pos)
+        lcd_screen.lcd_display_string_pos(block, 2, pos)
+        time.sleep(0.1)
+
+
+def test_5():
+    block = chr(255)  # block character, built-in
+
+    lcd_screen.lcd_display_string_pos(block * 16, 1, 0)
+    lcd_screen.lcd_display_string_pos(block * 16, 2, 0)
+
+
+test_0()
+test_1()
+test_2()
+test_3()
+test_4()
+test_5()

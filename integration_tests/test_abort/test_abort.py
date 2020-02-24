@@ -6,16 +6,27 @@ import time
 from spotmicro.utilities.log import Logger
 from spotmicro.utilities.config import Config
 
-log = Logger().setup_logger('Testing abort mechanism')
+log = Logger().setup_logger('Test Abort')
+
+log.info('Testing abort mechanism...')
+
+gpio_port = Config().get('abort_controller[0].gpio_port')
+
+log.info('Make sure you have connected your GPIO pin to the 0E port in the PCA9685 boards')
+log.info('Current configuration value is: ' + str(gpio_port))
+input("Press Enter to start the tests...")
 
 try:
-
-    gpio_port = Config().get('abort_controller[0].gpio_port')
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(gpio_port, GPIO.OUT)
 
-    time.sleep(1)
+    GPIO.output(gpio_port, False)
+    time.sleep(2)
+
+    GPIO.output(gpio_port, True)
+    time.sleep(2)
+
     GPIO.output(gpio_port, False)
     time.sleep(2)
 
