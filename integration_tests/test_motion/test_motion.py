@@ -47,6 +47,8 @@ log.info('There is configuration present for ' + str(boards) + ' boards')
 
 input("Press Enter to start the tests...")
 
+pca = None
+
 try:
 
     i2c = busio.I2C(SCL, SDA)
@@ -55,43 +57,61 @@ try:
                   reference_clock_speed=pca9685_1_reference_clock_speed)
     pca.frequency = 50
 
-    servo_0 = servo.Servo(pca.channels[0])
-    servo_0.set_pulse_width_range(min_pulse=500, max_pulse=2500)
+    for x in range(0, 15):
+        active_servo = servo.Servo(pca.channels[x])
+        active_servo.set_pulse_width_range(min_pulse=500, max_pulse=2500)
 
-    # Move by angle
-    servo_0.angle = 90
-    time.sleep(2)
+        active_servo.angle = 90
+        time.sleep(0.1)
+        active_servo.angle = 90
+        time.sleep(0.1)
 
-    servo_0.angle = 100
-    time.sleep(2)
+    time.sleep(1)
 
-    servo_0.angle = 90
-    time.sleep(2)
+    for x in range(0, 15):
+        active_servo = servo.Servo(pca.channels[x])
+        active_servo.set_pulse_width_range(min_pulse=500, max_pulse=2500)
 
-    servo_0.angle = 80
-    time.sleep(2)
+        active_servo.angle = 110
+        time.sleep(0.1)
+        active_servo.angle = 110
+        time.sleep(0.1)
 
-    if boards == 2:
+    time.sleep(1)
+
+finally:
+    pca.deinit()
+
+if boards == 2:
+    try:
+
+        i2c = busio.I2C(SCL, SDA)
+
         pca = PCA9685(i2c, address=pca9685_2_address,
                       reference_clock_speed=pca9685_2_reference_clock_speed)
         pca.frequency = 50
 
-        servo_0 = servo.Servo(pca.channels[0])
-        servo_0.set_pulse_width_range(min_pulse=500, max_pulse=2500)
+        for x in range(0, 15):
+            active_servo = servo.Servo(pca.channels[x])
+            active_servo.set_pulse_width_range(min_pulse=500, max_pulse=2500)
 
-        # Move by angle
-        servo_0.angle = 90
-        time.sleep(2)
+            active_servo.angle = 90
+            time.sleep(0.1)
+            active_servo.angle = 90
+            time.sleep(0.1)
 
-        servo_0.angle = 100
-        time.sleep(2)
+        time.sleep(1)
 
-        servo_0.angle = 90
-        time.sleep(2)
+        for x in range(0, 15):
+            active_servo = servo.Servo(pca.channels[x])
+            active_servo.set_pulse_width_range(min_pulse=500, max_pulse=2500)
 
-        servo_0.angle = 80
-        time.sleep(2)
+            active_servo.angle = 110
+            time.sleep(0.1)
+            active_servo.angle = 110
+            time.sleep(0.1)
 
+        time.sleep(1)
 
-finally:
-    pca.deinit()
+    finally:
+        pca.deinit()
