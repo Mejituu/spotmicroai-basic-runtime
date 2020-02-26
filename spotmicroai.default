@@ -1,7 +1,7 @@
 {
     "abort_controller": [
         {
-            "gpio_port": 17
+            "gpio_port": 11
         }
     ],
     "motion_controller": [

@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 import sys
 from spotmicro.utilities.log import Logger
 from spotmicro.utilities.config import Config
+import spotmicro.utilities.queues as queues
 
 log = Logger().setup_logger('Abort controller')
 
@@ -19,35 +20,36 @@ class AbortController:
             signal.signal(signal.SIGINT, self.exit_gracefully)
             signal.signal(signal.SIGTERM, self.exit_gracefully)
 
-            self.gpio_port = Config().get('abort_controller[0].gpio_port')
+            self.gpio_port = Config().get(Config.ABORT_CONTROLLER_GPIO_PORT)
 
-            # Abort mechanism
-            GPIO.setmode(GPIO.BCM)  # choose BCM or BOARD
+            GPIO.setmode(GPIO.BOARD)
             GPIO.setup(self.gpio_port, GPIO.OUT)
-            self._abort_queue = communication_queues['abort_controller']
-            self._lcd_screen_queue = communication_queues['lcd_screen_controller']
 
-            self._lcd_screen_queue.put('abort_controller OK')
+            self._abort_queue = communication_queues[queues.ABORT_CONTROLLER]
+            self._lcd_screen_queue = communication_queues[queues.ABORT_CONTROLLER]
 
             self.abort()
 
-            log.info('Controller started')
+            self._lcd_screen_queue.put(queues.LCD_SCREEN_SHOW_ABORT_CONTROLLER_OK_ON)
 
         except Exception as e:
-            log.error('GPIO problem detected')
-            self._lcd_screen_queue.put('abort_controller NOK')
-            sys.exit(1)
+            log.error('Abort controller initialization problem', e)
+            self._lcd_screen_queue.put(queues.LCD_SCREEN_SHOW_ABORT_CONTROLLER_NOK)
+            try:
+                self.abort()
+            finally:
+                sys.exit(1)
 
     def exit_gracefully(self, signum, frame):
-        self.abort()
-        log.info('Terminated')
-        sys.exit(0)
+        try:
+            self.abort()
+        finally:
+            log.info('Terminated')
+            sys.exit(0)
 
     def do_process_events_from_queue(self):
 
         try:
-            self.activate_servos()
-
             while True:
                 event = self._abort_queue.get()
 
@@ -58,13 +60,13 @@ class AbortController:
                     self.abort()
 
         except Exception as e:
-            log.error('Unknown problem with the GPIO detected', e)
+            log.error('Unknown problem while processing the queue of the abort controller', e)
+            sys.exit(1)
 
     def activate_servos(self):
+        self._lcd_screen_queue.put(queues.LCD_SCREEN_SHOW_ABORT_CONTROLLER_OK_ON)
         GPIO.output(self.gpio_port, False)
-        pass
 
     def abort(self):
-
+        self._lcd_screen_queue.put(queues.LCD_SCREEN_SHOW_ABORT_CONTROLLER_OK_OFF)
         GPIO.output(self.gpio_port, True)
-        pass

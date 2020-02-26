@@ -7,6 +7,7 @@ import signal
 import sys
 from spotmicro.utilities.log import Logger
 from spotmicro.utilities.config import Config
+import spotmicro.utilities.queues as queues
 
 log = Logger().setup_logger('Remote controller')
 
@@ -29,20 +30,15 @@ class RemoteControllerController:
             self.button_map = []
             self.axis_map = []
             self.jsdev = None
-
             self.previous_fvalue = 0
 
-            self._abort_queue = communication_queues['abort_controller']
-            self._motion_queue = communication_queues['motion_controller']
-            self._lcd_screen_queue = communication_queues['lcd_screen_controller']
-
-            self._lcd_screen_queue.put('remote_controller_connected SEARCHING')
-
-            log.info('Controller started')
+            self._abort_queue = communication_queues[queues.ABORT_CONTROLLER]
+            self._motion_queue = communication_queues[queues.MOTION_CONTROLLER]
+            self._lcd_screen_queue = communication_queues[queues.LCD_SCREEN_CONTROLLER]
 
         except Exception as e:
-            log.error('No Remote Controller detected')
-            self._lcd_screen_queue.put('remote_controller_connected NOK')
+            self._lcd_screen_queue.put(queues.LCD_SCREEN_SHOW_REMOTE_CONTROLLER_CONTROLLER_NOK)
+            log.error('Remote controller controller initialization problem', e)
             sys.exit(1)
 
     def exit_gracefully(self, signum, frame):
@@ -56,15 +52,15 @@ class RemoteControllerController:
         while True:
 
             if self.connected_device and not remote_controller_connected_already:
-                self._abort_queue.put('activate_servos')
-                self._lcd_screen_queue.put('remote_controller_connected OK')
+                self._lcd_screen_queue.put(queues.LCD_SCREEN_CONTROLLER_ACTION_ON)
+                self._lcd_screen_queue.put(queues.LCD_SCREEN_SHOW_REMOTE_CONTROLLER_CONTROLLER_OK)
                 remote_controller_connected_already = True
             else:
-                self._abort_queue.put('abort')
-                self._lcd_screen_queue.put('remote_controller_connected SEARCHING')
+                self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ABORT)
+                self._lcd_screen_queue.put(queues.LCD_SCREEN_SHOW_REMOTE_CONTROLLER_CONTROLLER_SEARCHING)
                 remote_controller_connected_already = False
                 self.check_for_connected_devices()
-                time.sleep(3)
+                time.sleep(2.5)
                 continue
 
             # Main event loop
@@ -101,16 +97,15 @@ class RemoteControllerController:
                     self._motion_queue.put(states)
 
                 except Exception as e:
-                    log.error('Problem with the remote controller, seems we lost connection with it')
-                    # self._lcd_screen_queue.put('Line2 No controller')
-                    self._abort_queue.put('abort')
+                    log.error('Unknown problem while processing the queue of the remote controller controller', e)
+                    self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ABORT)
                     remote_controller_connected_already = False
                     self.check_for_connected_devices()
                     break
 
     def check_for_connected_devices(self):
 
-        connected_device = Config().get('remote_controller_controller[0].remote_controller[0].device')
+        connected_device = Config().get(Config.REMOTE_CONTROLLER_CONTROLLER_DEVICE)
 
         log.info('Looking for connected devices')
         self.connected_device = False

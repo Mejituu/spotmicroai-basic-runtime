@@ -1,4 +1,3 @@
-# https://www.quinapalus.com/hd44780udg.html
 import signal
 import sys
 import time
@@ -9,12 +8,15 @@ from spotmicro.lcd_screen_controller import LCD_16x2_I2C_driver
 from spotmicro.utilities.config import Config
 from spotmicro.utilities.system import System
 
+import spotmicro.utilities.queues as queues
+
 log = Logger().setup_logger('LCD Screen controller')
 
 
 class LCDScreenController:
     is_alive = False
 
+    lcd_screen_controller = None
     abort_controller = None
     remote_controller_controller = None
     motion_controller_1 = None
@@ -28,33 +30,33 @@ class LCDScreenController:
             signal.signal(signal.SIGINT, self.exit_gracefully)
             signal.signal(signal.SIGTERM, self.exit_gracefully)
 
-            i2c_address = int(Config().get('lcd_screen_controller[0].lcd_screen[0].address'), 0)
+            i2c_address = int(Config().get(Config.LCD_SCREEN_CONTROLLER_I2C_ADDRESS), 0)
 
             self.screen = LCD_16x2_I2C_driver.lcd(address=i2c_address)
 
-            self._lcd_screen_queue = communication_queues['lcd_screen_controller']
+            self._lcd_screen_queue = communication_queues[queues.LCD_SCREEN_CONTROLLER]
 
             self.screen.lcd_clear()
-
             self.update_lcd_creen()
             self.turn_on()
 
             self.is_alive = True
-            log.info('Controller started')
 
         except Exception as e:
             self.is_alive = False
-            log.error('LCD Screen problem detected, skipping module', e)
+            log.error('LCD Screen controller initialization problem, module not critical, skipping', e)
 
     def exit_gracefully(self, signum, frame):
-        self.turn_off()
-        log.info('Terminated')
-        sys.exit(0)
+        try:
+            self.turn_off()
+        finally:
+            log.info('Terminated')
+            sys.exit(0)
 
     def do_process_events_from_queue(self):
 
         if not self.is_alive:
-            log.error("SpotMicro can work without lcd_screen, continuing")
+            log.error("SpotMicro is working without LCD Screen")
             return
 
         try:
@@ -63,11 +65,14 @@ class LCDScreenController:
                 try:
                     event = self._lcd_screen_queue.get(block=True, timeout=1)
 
-                    if event.startswith('abort_controller '):
-                        self.abort_controller = event[len('abort_controller '):]
+                    if event.startswith(queues.LCD_SCREEN_CONTROLLER + ' '):
+                        self.lcd_screen_controller = event[len(queues.LCD_SCREEN_CONTROLLER) + 1:]
 
-                    if event.startswith('remote_controller_connected '):
-                        self.remote_controller_controller = event[len('remote_controller_connected '):]
+                    if event.startswith(queues.ABORT_CONTROLLER + ''):
+                        self.abort_controller = event[len(queues.ABORT_CONTROLLER) + 1:]
+
+                    if event.startswith(queues.REMOTE_CONTROLLER_CONTROLLER + ' '):
+                        self.remote_controller_controller = event[len(queues.REMOTE_CONTROLLER_CONTROLLER + ' '):]
 
                     if event.startswith('motion_controller_1 '):
                         self.motion_controller_1 = event[len('motion_controller_1 '):]
@@ -80,18 +85,22 @@ class LCDScreenController:
                     time.sleep(1)
 
         except Exception as e:
-            log.error('Unknown problem with the LCD_16x2_I2C detected', e)
+            log.error('Unknown problem while processing the queue of the lcd screen controller', e)
 
     def turn_off(self):
         self.screen.lcd_clear()
+        time.sleep(0.1)
         self.screen.backlight(0)
-        log.debug('turn off backlight')
 
     def turn_on(self):
         self.screen.backlight(1)
-        log.debug('turn on backlight')
 
-    def update_lcd_creen(self):
+    def update_lcd_creen(self):  # https://www.quinapalus.com/hd44780udg.html
+
+        if self.lcd_screen_controller == 'ON':
+            self.turn_on()
+        elif self.lcd_screen_controller == 'OFF':
+            self.turn_off()
 
         temperature = System().temperature()
 
@@ -106,7 +115,7 @@ class LCDScreenController:
         icon_problem = [0x0, 0x1b, 0xe, 0x4, 0xe, 0x1b, 0x0, 0x0]
         icon_success_reverse = [0x1f, 0x1e, 0x1c, 0x9, 0x3, 0x17, 0x1f]
 
-        # There is only memory for 7
+        # There is only memory for 7 in the lcd screen controller
         custom_icons.insert(0, icon_empty)
         custom_icons.insert(1, icon_success)
         custom_icons.insert(2, icon_pca9685)
@@ -116,12 +125,9 @@ class LCDScreenController:
         custom_icons.insert(6, icon_problem)
         custom_icons.insert(7, icon_success_reverse)
 
-        remote_controller_connected_keep_blinking = False
-
         self.screen.lcd_load_custom_chars(custom_icons)
 
-        # Write first three chars to row 1 directly
-        self.screen.lcd_write(0x80)
+        self.screen.lcd_write(0x80)  # First line
 
         for char in 'SpotMicro':
             self.screen.lcd_write(ord(char), 0b00000001)
@@ -135,7 +141,7 @@ class LCDScreenController:
         self.screen.lcd_write_char(2)
 
         # Write next three chars to row 2 directly
-        self.screen.lcd_write(0xC0)
+        self.screen.lcd_write(0xC0)  # Second line
         self.screen.lcd_write_char(0)
         self.screen.lcd_write_char(0)
         self.screen.lcd_write_char(0)
@@ -163,8 +169,10 @@ class LCDScreenController:
 
         self.screen.lcd_write_char(0)
 
-        if self.abort_controller == 'OK':
+        if self.abort_controller == 'OK ON':
             self.screen.lcd_write_char(1)
+        elif self.abort_controller == 'OK OFF':
+            self.screen.lcd_write_char(7)
         else:
             self.screen.lcd_write_char(6)
 

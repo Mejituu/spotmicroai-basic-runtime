@@ -19,6 +19,77 @@ class Singleton(type):
 
 
 class Config(metaclass=Singleton):
+    ABORT_CONTROLLER_GPIO_PORT = 'abort_controller[0].gpio_port'
+    LCD_SCREEN_CONTROLLER_I2C_ADDRESS = 'lcd_screen_controller[0].lcd_screen[0].address'
+    REMOTE_CONTROLLER_CONTROLLER_DEVICE = 'remote_controller_controller[0].remote_controller[0].device'
+
+    MOTION_CONTROLLER_BOARDS_PCA9685_1_ADDRESS = 'motion_controller[*].boards[*].pca9685_1[*].address | [0] | [0] | [0]'
+    MOTION_CONTROLLER_BOARDS_PCA9685_1_REFERENCE_CLOCK_SPEED = 'motion_controller[*].boards[*].pca9685_1[*].reference_clock_speed | [0] | [0] | [0]'
+    MOTION_CONTROLLER_BOARDS_PCA9685_1_FREQUENCY = 'motion_controller[*].boards[*].pca9685_1[*].frequency | [0] | [0] | [0]'
+    MOTION_CONTROLLER_BOARDS_PCA9685_2_ADDRESS = 'motion_controller[*].boards[*].pca9685_2[*].address | [0] | [0] | [0]'
+    MOTION_CONTROLLER_BOARDS_PCA9685_2_REFERENCE_CLOCK_SPEED = 'motion_controller[*].boards[*].pca9685_2[*].reference_clock_speed | [0] | [0] | [0]'
+    MOTION_CONTROLLER_BOARDS_PCA9685_2_FREQUENCY = 'motion_controller[*].boards[*].pca9685_2[*].frequency | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_PCA9685 = 'motion_controller[*].servos[*].rear_shoulder_left[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_CHANNEL = 'motion_controller[*].servos[*].rear_shoulder_left[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].rear_shoulder_left[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].rear_shoulder_left[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_PCA9685 = 'motion_controller[*].servos[*].rear_leg_left[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_CHANNEL = 'motion_controller[*].servos[*].rear_leg_left[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].rear_leg_left[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].rear_leg_left[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_PCA9685 = 'motion_controller[*].servos[*].rear_feet_left[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_CHANNEL = 'motion_controller[*].servos[*].rear_feet_left[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].rear_feet_left[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].rear_feet_left[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_RIGHT_PCA9685 = 'motion_controller[*].servos[*].rear_shoulder_right[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_RIGHT_CHANNEL = 'motion_controller[*].servos[*].rear_shoulder_right[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].rear_shoulder_right[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].rear_shoulder_right[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_PCA9685 = 'motion_controller[*].servos[*].rear_leg_right[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_CHANNEL = 'motion_controller[*].servos[*].rear_leg_right[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].rear_leg_right[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].rear_leg_right[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_PCA9685 = 'motion_controller[*].servos[*].rear_feet_right[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_CHANNEL = 'motion_controller[*].servos[*].rear_feet_right[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].rear_feet_right[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].rear_feet_right[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_PCA9685 = 'motion_controller[*].servos[*].front_shoulder_left[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_CHANNEL = 'motion_controller[*].servos[*].front_shoulder_left[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].front_shoulder_left[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].front_shoulder_left[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_PCA9685 = 'motion_controller[*].servos[*].front_leg_left[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_CHANNEL = 'motion_controller[*].servos[*].front_leg_left[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].front_leg_left[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].front_leg_left[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_PCA9685 = 'motion_controller[*].servos[*].front_feet_left[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_CHANNEL = 'motion_controller[*].servos[*].front_feet_left[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].front_feet_left[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].front_feet_left[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_PCA9685 = 'motion_controller[*].servos[*].front_shoulder_right[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_CHANNEL = 'motion_controller[*].servos[*].front_shoulder_right[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].front_shoulder_right[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].front_shoulder_right[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_PCA9685 = 'motion_controller[*].servos[*].front_leg_right[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_CHANNEL = 'motion_controller[*].servos[*].front_leg_right[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].front_leg_right[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].front_leg_right[*].max_pulse | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_PCA9685 = 'motion_controller[*].servos[*].front_feet_right[*].pca9685 | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_CHANNEL = 'motion_controller[*].servos[*].front_feet_right[*].channel | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].front_feet_right[*].min_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].front_feet_right[*].max_pulse | [0] | [0] | [0]'
+
     values = {}
 
     def __init__(self):
@@ -35,7 +106,8 @@ class Config(metaclass=Singleton):
     def load_config(self):
         try:
             if not os.path.exists(str(Path.home()) + '/spotmicroai.json'):
-                shutil.copyfile(str(Path.home()) + '/spotmicroai/spotmicroai.default', str(Path.home()) + '/spotmicroai.json')
+                shutil.copyfile(str(Path.home()) + '/spotmicroai/spotmicroai.default',
+                                str(Path.home()) + '/spotmicroai.json')
 
             with open(str(Path.home()) + '/spotmicroai.json') as json_file:
                 self.values = json.load(json_file)
