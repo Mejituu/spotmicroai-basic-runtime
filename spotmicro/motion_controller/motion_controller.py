@@ -308,89 +308,73 @@ class MotionController:
             sys.exit(1)
 
     def exit_gracefully(self, signum, frame):
+        self.pca9685_1.deinit()
+        if self.boards == 2:
+            self.pca9685_2.deinit()
         log.info('Terminated')
         sys.exit(0)
 
     def do_process_events_from_queues(self):
 
-        try:
+        while True:
 
-            while True:
+            try:
 
-                try:
+                # If we don't get an order in 60 seconds we disable the robot.
+                # event = self._motion_queue.get(block=True, timeout=30)
+                event = self._motion_queue.get()
 
-                    # If we don't get an order in 60 seconds we disable the robot.
-                    # event = self._motion_queue.get(block=True, timeout=30)
-                    event = self._motion_queue.get()
+                log.debug(event)
 
-                    log.debug(event)
+                event_diff = {}
+                if self._previous_event:
+                    for key in event:
+                        if event[key] != self._previous_event[key]:
+                            event_diff[key] = event[key]
 
-                    event_diff = {}
-                    if self._previous_event:
-                        for key in event:
-                            if event[key] != self._previous_event[key]:
-                                event_diff[key] = event[key]
+                # screen is very low and un responsive, not good to print the buttons pushes
+                # log.debug(', '.join(event_diff))
+                # if not event_diff:
+                #    self._lcd_screen_queue.put('Line2 Inactive')
+                # else:
+                #    self._lcd_screen_queue.put('Line2 ' + str(event_diff)[1:-1].replace("'", ''))
 
-                    # screen is very low and un responsive, not good to print the buttons pushes
-                    # log.debug(', '.join(event_diff))
-                    # if not event_diff:
-                    #    self._lcd_screen_queue.put('Line2 Inactive')
-                    # else:
-                    #    self._lcd_screen_queue.put('Line2 ' + str(event_diff)[1:-1].replace("'", ''))
+                # if event.startswith('activate'):
+                #    self.activate()
 
-                    # if event.startswith('activate'):
-                    #    self.activate()
+                # if event.startswith('key press'):
+                #    self.move_to_position_xxx()
 
-                    # if event.startswith('key press'):
-                    #    self.move_to_position_xxx()
+                # if event.startswith('_Obstacle at 10cm'):
+                #    pass
 
-                    # if event.startswith('_Obstacle at 10cm'):
-                    #    pass
+                if event['x']:
+                    print('X activate GPIO')
+                    self.activate()
 
-                    if event['start']:
-                        print('START')
-                        self.activate()
-
-                    if event['y']:
-                        print('ABORT')
-                        self.abort()
-
-                    if event['a']:
-                        print('You did press A, SpotMicro rest position')
-                        self.rest_position()
-
-                    if event['b']:
-                        print('You did press B, SpotMicro Stop!')
-                        self.move_forward()
-
-                    if event['ly'] < 0 or event['hat0y'] < 0:
-                        print('Moving forward ' + str(event['ly']))
-                        self.move_forward()
-
-                    if event['ly'] > 0 or event['hat0y'] > 0:
-                        print('Moving backwards ' + str(event['ly']))
-                        self.move_backwards()
-
-                    if event['lx'] > 0 or event['hat0x'] > 0:
-                        print('Spinning to the right ' + str(event['lx']))
-
-                    if event['lx'] < 0 or event['hat0x'] < 0:
-                        print('Spinning to the left ' + str(event['lx']))
-
-                    self._previous_event = event
-
-                except queue.Empty as e:
-                    # This will happen after 30 seconds of inactivity
-                    # If we don't get an order in 30 seconds we disable the robot.
-                    log.info('Inactivity lasted 30 seconds, shutting down the servos, '
-                             'press start to reactivate')
+                if event['y']:
+                    print('Y deactivate GPIO')
                     self.abort()
 
-        except Exception as e:
-            log.error('Unknown problem with the PCA9685 detected', e)
+                if event['a']:
+                    print('You did press A, SpotMicro rest position')
+                    self.rest_position()
 
-        finally:
-            pass
+                if event['b']:
+                    print('You did press B, SpotMicro Stop!')
+                    self.move_forward()
+
+                self._previous_event = event
+
+            except queue.Empty as e:
+                # This will happen after 30 seconds of inactivity
+                # If we don't get an order in 30 seconds we disable the robot.
+                log.info('Inactivity lasted 30 seconds, shutting down the servos, '
+                         'press start to reactivate')
+                self.abort()
+
+            except Exception as e:
+                log.error('Unknown problem with the PCA9685 detected', e)
 
     def activate(self):
         self._abort_queue.put('activate_servos')
@@ -419,26 +403,6 @@ class MotionController:
         time.sleep(0.1)
 
     def move_forward(self):
-
-        self.servo_rear_shoulder_left.angle = 100
-        self.servo_rear_leg_left.angle = 100
-        self.servo_rear_feet_left.angle = 100
-
-        self.servo_rear_shoulder_right.angle = 100
-        self.servo_rear_leg_right.angle = 100
-        self.servo_rear_feet_right.angle = 100
-
-        self.servo_front_shoulder_left.angle = 100
-        self.servo_front_leg_left.angle = 100
-        self.servo_front_feet_left.angle = 100
-
-        self.servo_front_shoulder_right.angle = 100
-        self.servo_front_leg_right.angle = 100
-        self.servo_front_feet_right.angle = 100
-
-        time.sleep(0.1)
-
-    def move_backwards(self):
 
         self.servo_rear_shoulder_left.angle = 80
         self.servo_rear_leg_left.angle = 80
