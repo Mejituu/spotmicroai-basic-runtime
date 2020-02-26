@@ -381,6 +381,9 @@ class MotionController:
         self._abort_queue.put('activate_servos')
 
     def abort(self):
+        self.pca9685_1.deinit()
+        if self.boards == 2:
+            self.pca9685_2.deinit()
         self._abort_queue.put('abort')
 
     def rest_position(self):

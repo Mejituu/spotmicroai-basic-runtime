@@ -39,7 +39,7 @@ class AbortController:
             sys.exit(1)
 
     def exit_gracefully(self, signum, frame):
-        GPIO.cleanup()
+        self.abort()
         log.info('Terminated')
         sys.exit(0)
 
@@ -65,5 +65,6 @@ class AbortController:
         pass
 
     def abort(self):
+
         GPIO.output(self.gpio_port, True)
         pass
