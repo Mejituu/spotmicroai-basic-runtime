@@ -24,8 +24,6 @@ class MotionController:
 
             log.debug('Starting controller...')
 
-            self.abort()
-
             signal.signal(signal.SIGINT, self.exit_gracefully)
             signal.signal(signal.SIGTERM, self.exit_gracefully)
 
