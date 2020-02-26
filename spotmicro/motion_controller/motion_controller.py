@@ -24,6 +24,8 @@ class MotionController:
 
             log.debug('Starting controller...')
 
+            self.abort()
+
             signal.signal(signal.SIGINT, self.exit_gracefully)
             signal.signal(signal.SIGTERM, self.exit_gracefully)
 
@@ -279,7 +281,7 @@ class MotionController:
                 self.servo_front_feet_right.set_pulse_width_range(min_pulse=servo_front_feet_right_min_pulse,
                                                                   max_pulse=servo_front_feet_right_max_pulse)
 
-            self.rest_position()
+            # self.rest_position()
 
             self._abort_queue = communication_queues['abort_controller']
             self._motion_queue = communication_queues['motion_controller']
@@ -377,6 +379,7 @@ class MotionController:
                 log.error('Unknown problem with the PCA9685 detected', e)
 
     def activate(self):
+        self.rest_position()
         self._abort_queue.put('activate_servos')
 
     def abort(self):
