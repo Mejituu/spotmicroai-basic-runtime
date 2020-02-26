@@ -28,7 +28,7 @@ class System(metaclass=Singleton):
     def temperature(self):
         try:
             temp = os.popen("vcgencmd measure_temp").readline()
-            log.debug("System temperature: " + temp.replace("temp=", "")[:-5])
+            # log.debug("System temperature: " + temp.replace("temp=", "")[:-5])
             return temp.replace("temp=", "")[:-5]
         except:
             return '000'

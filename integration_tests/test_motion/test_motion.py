@@ -1,10 +1,5 @@
 #!/home/pi/spotmicroai/venv/bin/python3 -u
 
-# Example based from https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/blob/master/examples/pca9685_servo.py
-# Servo library used to simplify: https://github.com/adafruit/Adafruit_CircuitPython_Motor/blob/master/adafruit_motor/servo.py
-
-# reference_clock_speed from: https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/blob/master/examples/pca9685_calibration.py
-
 import busio
 from board import SCL, SDA
 from adafruit_pca9685 import PCA9685
@@ -13,6 +8,7 @@ import time
 
 from spotmicro.utilities.log import Logger
 from spotmicro.utilities.config import Config
+import RPi.GPIO as GPIO
 
 log = Logger().setup_logger('Test Motion')
 
@@ -49,7 +45,15 @@ input("Press Enter to start the tests...")
 
 pca = None
 
+gpio_port = Config().get('abort_controller[0].gpio_port')
+
 try:
+
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(gpio_port, GPIO.OUT)
+
+    GPIO.output(gpio_port, False)
+    time.sleep(1)
 
     i2c = busio.I2C(SCL, SDA)
 
@@ -79,8 +83,21 @@ try:
 
     time.sleep(1)
 
+    input("Press Enter to cut power in servos...")
+
+    GPIO.output(gpio_port, True)
+    time.sleep(1)
+
+    input("Press Enter to reenable power in servos...")
+
+    GPIO.output(gpio_port, False)
+    time.sleep(1)
+
+
 finally:
+    GPIO.output(gpio_port, True)
     pca.deinit()
+    # GPIO.cleanup() <- don't use, it only deactivates the ports used in the program
 
 if boards == 2:
     try:
@@ -114,4 +131,5 @@ if boards == 2:
         time.sleep(1)
 
     finally:
+        GPIO.output(gpio_port, True)
         pca.deinit()

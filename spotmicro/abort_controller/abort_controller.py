@@ -12,6 +12,8 @@ class AbortController:
 
     def __init__(self, communication_queues):
 
+        return
+
         try:
 
             log.debug('Starting controller...')
@@ -42,6 +44,8 @@ class AbortController:
 
     def do_process_events_from_queue(self):
 
+        return
+
         try:
             self.activate_servos()
 
@@ -58,9 +62,9 @@ class AbortController:
             log.error('Unknown problem with the GPIO detected', e)
 
     def activate_servos(self):
-        # GPIO.output(self.gpio_port, 1)  # Set GPIO pin value to 1/GPIO.HIGH/True
+        # GPIO.output(self.gpio_port, False)  # set GPIO pin value to 0/GPIO.LOW/False
         pass
 
     def abort(self):
-        # GPIO.output(self.gpio_port, 0)  # set GPIO pin value to 0/GPIO.LOW/False
+        # GPIO.output(self.gpio_port, True)  # Set GPIO pin value to 1/GPIO.HIGH/True
         pass

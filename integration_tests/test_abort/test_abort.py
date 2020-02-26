@@ -23,14 +23,11 @@ try:
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(gpio_port, GPIO.OUT)
 
-    GPIO.output(gpio_port, False)
-    time.sleep(2)
+    GPIO.cleanup()
 
     GPIO.output(gpio_port, True)
     time.sleep(2)
 
-    GPIO.output(gpio_port, False)
-    time.sleep(2)
-
 finally:
-    GPIO.cleanup()
+    # GPIO.cleanup()
+    pass

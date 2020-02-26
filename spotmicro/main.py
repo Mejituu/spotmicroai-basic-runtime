@@ -111,9 +111,9 @@ def main():
     remote_controller_controller.start()
     lcd_screen_controller.start()
 
-    if not abort_controller.is_alive():
-        log.error("SpotMicro can't work without abort_controller")
-        sys.exit(1)
+    #if not abort_controller.is_alive():
+    #    log.error("SpotMicro can't work without abort_controller")
+    #    sys.exit(1)
 
     if not motion_controller.is_alive():
         log.error("SpotMicro can't work without motion_controller")
