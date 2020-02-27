@@ -167,12 +167,15 @@ class MotionController:
 
                 if event['start']:
                     if self.is_activated:
+                        self.rest_position()
+                        time.sleep(0.5)
                         self.deactivate_pca9685_boards()
                         self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ABORT)
                     else:
                         self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ACTIVATE)
                         self.activate_pca9685_boards()
                         self.activate_servos()
+                        self.rest_position()
 
                 if event['a']:
                     # print('A')
@@ -182,10 +185,13 @@ class MotionController:
                     self.standing_position()
 
                 if event['b']:
-                    self.body_move_position()
+                    self.body_move_position_right()
 
-                if event['lx']:
-                    self.set_position(event['lx'])
+                if event['x']:
+                    self.body_move_position_left()
+
+                if event['hat0x']:
+                    self.rest_position_increment()
 
                 self._previous_event = event
 
@@ -193,6 +199,8 @@ class MotionController:
                 # If we don't get an order in 30 seconds we staydown the robot.
                 log.info('Inactivity lasted 30 seconds, shutting down the servos, '
                          'press start to reactivate')
+                self.rest_position()
+                time.sleep(0.5)
                 self.deactivate_pca9685_boards()
 
             except Exception as e:
@@ -231,11 +239,7 @@ class MotionController:
         self.is_activated = True
         log.debug(str(self.boards) + ' PCA9685 board(s) activated')
 
-        self.rest_position()
-
     def deactivate_pca9685_boards(self):
-
-        self.rest_position()
 
         try:
             if self.pca9685_1:
@@ -245,7 +249,7 @@ class MotionController:
                 if self.boards == 2 and self.pca9685_2:
                     self.pca9685_2.deinit()
             finally:
-                self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ABORT)
+                # self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ABORT)
                 self.is_activated = False
 
         log.debug(str(self.boards) + ' PCA9685 board(s) deactivated')
@@ -426,11 +430,11 @@ class MotionController:
 
     def rest_position(self):
 
-        self.servo_rear_shoulder_left.angle = 85
+        self.servo_rear_shoulder_left.angle = 80
         self.servo_rear_leg_left.angle = 135
         self.servo_rear_feet_left.angle = 10
 
-        self.servo_rear_shoulder_right.angle = 95
+        self.servo_rear_shoulder_right.angle = 105
         self.servo_rear_leg_right.angle = 25
         self.servo_rear_feet_right.angle = 160
 
@@ -447,26 +451,73 @@ class MotionController:
         variation_leg = 50
         variation_feet = 70
 
-        self.servo_rear_shoulder_left.angle = 85
+        self.servo_rear_shoulder_left.angle = 80 + 10
         self.servo_rear_leg_left.angle = 135 - variation_leg
         self.servo_rear_feet_left.angle = 10 + variation_feet
 
-        self.servo_rear_shoulder_right.angle = 95
+        self.servo_rear_shoulder_right.angle = 105 - 10
         self.servo_rear_leg_right.angle = 25 + variation_leg
         self.servo_rear_feet_right.angle = 160 - variation_feet
 
-        time.sleep(0.1)
+        time.sleep(0.05)
 
-        self.servo_front_shoulder_left.angle = 90
-        self.servo_front_leg_left.angle = 165 - variation_leg + 10
-        self.servo_front_feet_left.angle = 20 + variation_feet - 10
+        self.servo_front_shoulder_left.angle = 90 - 10
+        self.servo_front_leg_left.angle = 165 - variation_leg + 5
+        self.servo_front_feet_left.angle = 20 + variation_feet - 5
 
-        self.servo_front_shoulder_right.angle = 90
-        self.servo_front_leg_right.angle = 30 + variation_leg - 10
-        self.servo_front_feet_right.angle = 175 - variation_feet + 10
+        self.servo_front_shoulder_right.angle = 90 + 10
+        self.servo_front_leg_right.angle = 30 + variation_leg - 5
+        self.servo_front_feet_right.angle = 175 - variation_feet + 5
 
-    def body_move_position(self):
-        pass
+    def body_move_position_right(self):
+
+        move = 20
+
+        variation_leg = 50
+        variation_feet = 70
+
+        self.servo_rear_shoulder_left.angle = 80 + 10 + move
+        self.servo_rear_leg_left.angle = 135 - variation_leg
+        self.servo_rear_feet_left.angle = 10 + variation_feet
+
+        self.servo_rear_shoulder_right.angle = 105 - 10 + move
+        self.servo_rear_leg_right.angle = 25 + variation_leg
+        self.servo_rear_feet_right.angle = 160 - variation_feet
+
+        time.sleep(0.05)
+
+        self.servo_front_shoulder_left.angle = 90 - 10 - move
+        self.servo_front_leg_left.angle = 165 - variation_leg + 5
+        self.servo_front_feet_left.angle = 20 + variation_feet - 5
+
+        self.servo_front_shoulder_right.angle = 90 + 10 - move
+        self.servo_front_leg_right.angle = 30 + variation_leg - 5
+        self.servo_front_feet_right.angle = 175 - variation_feet + 5
+
+    def body_move_position_left(self):
+
+        move = 20
+
+        variation_leg = 50
+        variation_feet = 70
+
+        self.servo_rear_shoulder_left.angle = 80 + 10 - move
+        self.servo_rear_leg_left.angle = 135 - variation_leg
+        self.servo_rear_feet_left.angle = 10 + variation_feet
+
+        self.servo_rear_shoulder_right.angle = 105 - 10 - move
+        self.servo_rear_leg_right.angle = 25 + variation_leg
+        self.servo_rear_feet_right.angle = 160 - variation_feet
+
+        time.sleep(0.05)
+
+        self.servo_front_shoulder_left.angle = 90 - 10 + move
+        self.servo_front_leg_left.angle = 165 - variation_leg + 5
+        self.servo_front_feet_left.angle = 20 + variation_feet - 5
+
+        self.servo_front_shoulder_right.angle = 90 + 10 + move
+        self.servo_front_leg_right.angle = 30 + variation_leg - 5
+        self.servo_front_feet_right.angle = 175 - variation_feet + 5
 
     def set_position(self, raw_value):
 
