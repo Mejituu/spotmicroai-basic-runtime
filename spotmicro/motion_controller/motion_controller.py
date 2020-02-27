@@ -161,7 +161,7 @@ class MotionController:
             try:
 
                 # If we don't get an order in 30 seconds we staydown the robot.
-                event = self._motion_queue.get(block=True, timeout=30)
+                event = self._motion_queue.get(block=True, timeout=60)
 
                 # log.debug(event)
 
@@ -180,7 +180,7 @@ class MotionController:
 
                 if event['b']:
                     # print('B')
-                    self.move_forward()
+                    self.calibrate_leg()
 
                 if event['lx']:
                     self.set_position(event['lx'])
@@ -228,7 +228,6 @@ class MotionController:
 
         self.is_activated = True
         log.debug(str(self.boards) + ' PCA9685 board(s) activated')
-
 
     def deactivate_pca9685_boards(self):
         try:
@@ -421,42 +420,38 @@ class MotionController:
     def rest_position(self):
 
         self.servo_rear_shoulder_left.angle = 90
-        self.servo_rear_leg_left.angle = 90
-        self.servo_rear_feet_left.angle = 90
+        self.servo_rear_leg_left.angle = 135
+        self.servo_rear_feet_left.angle = 20
 
-        self.servo_rear_shoulder_right.angle = 90
-        self.servo_rear_leg_right.angle = 90
-        self.servo_rear_feet_right.angle = 90
+        self.servo_rear_shoulder_right.angle = 95
+        self.servo_rear_leg_right.angle = 25
+        self.servo_rear_feet_right.angle = 160
 
         self.servo_front_shoulder_left.angle = 90
-        self.servo_front_leg_left.angle = 90
-        self.servo_front_feet_left.angle = 90
+        self.servo_front_leg_left.angle = 165
+        self.servo_front_feet_left.angle = 20
 
-        self.servo_front_shoulder_right.angle = 90
-        self.servo_front_leg_right.angle = 90
-        self.servo_front_feet_right.angle = 90
+        self.servo_front_shoulder_right.angle = 95
+        self.servo_front_leg_right.angle = 30
+        self.servo_front_feet_right.angle = 170
 
-        time.sleep(0.1)
+    def calibrate_leg(self):
 
-    def move_forward(self):
-
-        self.servo_rear_shoulder_left.angle = 100
+        self.servo_rear_shoulder_left.angle = 90
         self.servo_rear_leg_left.angle = 135
-        self.servo_rear_feet_left.angle = 0
+        self.servo_rear_feet_left.angle = 20
 
-        self.servo_rear_shoulder_right.angle = 80
-        self.servo_rear_leg_right.angle = 45
-        self.servo_rear_feet_right.angle = 180
+        self.servo_rear_shoulder_right.angle = 95
+        self.servo_rear_leg_right.angle = 25
+        self.servo_rear_feet_right.angle = 160
 
-        self.servo_front_shoulder_left.angle = 80
-        self.servo_front_leg_left.angle = 135
-        self.servo_front_feet_left.angle = 0
+        self.servo_front_shoulder_left.angle = 90
+        self.servo_front_leg_left.angle = 165
+        self.servo_front_feet_left.angle = 20
 
-        self.servo_front_shoulder_right.angle = 100
-        self.servo_front_leg_right.angle = 45
-        self.servo_front_feet_right.angle = 180
-
-        time.sleep(0.1)
+        self.servo_front_shoulder_right.angle = 95
+        self.servo_front_leg_right.angle = 30
+        self.servo_front_feet_right.angle = 170
 
     def set_position(self, raw_value):
 
