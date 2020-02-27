@@ -22,11 +22,11 @@ class AbortController:
 
             self.gpio_port = Config().get(Config.ABORT_CONTROLLER_GPIO_PORT)
 
-            GPIO.setmode(GPIO.BOARD)
+            GPIO.setmode(GPIO.BCM)
             GPIO.setup(self.gpio_port, GPIO.OUT)
 
             self._abort_queue = communication_queues[queues.ABORT_CONTROLLER]
-            self._lcd_screen_queue = communication_queues[queues.ABORT_CONTROLLER]
+            self._lcd_screen_queue = communication_queues[queues.LCD_SCREEN_CONTROLLER]
 
             self.abort()
 
@@ -53,10 +53,10 @@ class AbortController:
             while True:
                 event = self._abort_queue.get()
 
-                if event == 'activate_servos':
+                if event == queues.ABORT_CONTROLLER_ACTION_ACTIVATE:
                     self.activate_servos()
 
-                if event == 'abort':
+                if event == queues.ABORT_CONTROLLER_ACTION_ABORT:
                     self.abort()
 
         except Exception as e:

@@ -56,11 +56,11 @@ class RemoteControllerController:
                 self._lcd_screen_queue.put(queues.LCD_SCREEN_SHOW_REMOTE_CONTROLLER_CONTROLLER_OK)
                 remote_controller_connected_already = True
             else:
+                time.sleep(2.5)
                 self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ABORT)
                 self._lcd_screen_queue.put(queues.LCD_SCREEN_SHOW_REMOTE_CONTROLLER_CONTROLLER_SEARCHING)
                 remote_controller_connected_already = False
                 self.check_for_connected_devices()
-                time.sleep(2.5)
                 continue
 
             # Main event loop
@@ -82,7 +82,7 @@ class RemoteControllerController:
                         if type & 0x02:
                             axis = self.axis_map[number]
                             if axis:
-                                fvalue = round(value / 32767.0, 1)
+                                fvalue = round(value / 32767.0, 2)
                                 if self.previous_fvalue == fvalue:
                                     continue
 
@@ -93,7 +93,10 @@ class RemoteControllerController:
                     states.update(self.button_states)
                     states.update(self.axis_states)
 
-                    # log.debug(self.states)
+                    # log.debug(states)
+                    # TODO: we need to throttle the information in the queue, we fill faster than the servos
+                    #  can move when using axis: https://pypi.org/project/throttle/
+
                     self._motion_queue.put(states)
 
                 except Exception as e:

@@ -165,27 +165,25 @@ class MotionController:
 
                 # log.debug(event)
 
-                event_diff = {}
-                if self._previous_event:
-                    for key in event:
-                        if event[key] != self._previous_event[key]:
-                            event_diff[key] = event[key]
-
                 if event['start']:
                     if self.is_activated:
                         self.deactivate_pca9685_boards()
+                        self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ABORT)
                     else:
+                        self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ACTIVATE)
                         self.activate_pca9685_boards()
                         self.activate_servos()
-                    self.is_activated = not self.is_activated
 
                 if event['a']:
-                    print('A')
+                    # print('A')
                     self.rest_position()
 
                 if event['b']:
-                    print('B')
+                    # print('B')
                     self.move_forward()
+
+                if event['lx']:
+                    self.set_position(event['lx'])
 
                 self._previous_event = event
 
@@ -228,17 +226,23 @@ class MotionController:
             self.pca9685_2.frequency = self.pca9685_2_frequency
             self.boards = 2
 
-        log.debug(str(self.boards) + ' PCA9685 board(s) detected')
+        self.is_activated = True
+        log.debug(str(self.boards) + ' PCA9685 board(s) activated')
+
 
     def deactivate_pca9685_boards(self):
         try:
-            self.pca9685_1.deinit()
+            if self.pca9685_1:
+                self.pca9685_1.deinit()
         finally:
             try:
-                if self.boards == 2:
+                if self.boards == 2 and self.pca9685_2:
                     self.pca9685_2.deinit()
             finally:
                 self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ABORT)
+                self.is_activated = False
+
+        log.debug(str(self.boards) + ' PCA9685 board(s) deactivated')
 
     def load_servos_configuration(self):
 
@@ -436,20 +440,41 @@ class MotionController:
 
     def move_forward(self):
 
-        self.servo_rear_shoulder_left.angle = 85
-        self.servo_rear_leg_left.angle = 85
-        self.servo_rear_feet_left.angle = 85
+        self.servo_rear_shoulder_left.angle = 100
+        self.servo_rear_leg_left.angle = 135
+        self.servo_rear_feet_left.angle = 0
 
-        self.servo_rear_shoulder_right.angle = 85
-        self.servo_rear_leg_right.angle = 85
-        self.servo_rear_feet_right.angle = 85
+        self.servo_rear_shoulder_right.angle = 80
+        self.servo_rear_leg_right.angle = 45
+        self.servo_rear_feet_right.angle = 180
 
-        self.servo_front_shoulder_left.angle = 85
-        self.servo_front_leg_left.angle = 85
-        self.servo_front_feet_left.angle = 85
+        self.servo_front_shoulder_left.angle = 80
+        self.servo_front_leg_left.angle = 135
+        self.servo_front_feet_left.angle = 0
 
-        self.servo_front_shoulder_right.angle = 85
-        self.servo_front_leg_right.angle = 85
-        self.servo_front_feet_right.angle = 85
+        self.servo_front_shoulder_right.angle = 100
+        self.servo_front_leg_right.angle = 45
+        self.servo_front_feet_right.angle = 180
 
         time.sleep(0.1)
+
+    def set_position(self, raw_value):
+
+        left_position = int(self.maprange((-1, 1), (0, 180), raw_value))
+        right_position = int(self.maprange((1, -1), (0, 180), raw_value))
+
+        if int(self.servo_rear_feet_left.angle) != int(left_position):
+            self.servo_rear_feet_left.angle = left_position
+
+        if int(self.servo_rear_feet_right.angle) != int(right_position):
+            self.servo_rear_feet_right.angle = right_position
+
+        self.servo_rear_shoulder_left.angle = 100
+        self.servo_rear_leg_left.angle = 90
+
+        self.servo_rear_shoulder_right.angle = 80
+        self.servo_rear_leg_right.angle = 90
+
+    def maprange(self, a, b, s):
+        (a1, a2), (b1, b2) = a, b
+        return b1 + ((s - a1) * (b2 - b1) / (a2 - a1))
