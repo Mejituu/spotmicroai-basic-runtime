@@ -178,9 +178,11 @@ class MotionController:
                     # print('A')
                     self.rest_position()
 
+                if event['y']:
+                    self.standing_position()
+
                 if event['b']:
-                    # print('B')
-                    self.calibrate_leg()
+                    self.body_move_position()
 
                 if event['lx']:
                     self.set_position(event['lx'])
@@ -229,7 +231,12 @@ class MotionController:
         self.is_activated = True
         log.debug(str(self.boards) + ' PCA9685 board(s) activated')
 
+        self.rest_position()
+
     def deactivate_pca9685_boards(self):
+
+        self.rest_position()
+
         try:
             if self.pca9685_1:
                 self.pca9685_1.deinit()
@@ -419,9 +426,9 @@ class MotionController:
 
     def rest_position(self):
 
-        self.servo_rear_shoulder_left.angle = 90
+        self.servo_rear_shoulder_left.angle = 85
         self.servo_rear_leg_left.angle = 135
-        self.servo_rear_feet_left.angle = 20
+        self.servo_rear_feet_left.angle = 10
 
         self.servo_rear_shoulder_right.angle = 95
         self.servo_rear_leg_right.angle = 25
@@ -431,27 +438,35 @@ class MotionController:
         self.servo_front_leg_left.angle = 165
         self.servo_front_feet_left.angle = 20
 
-        self.servo_front_shoulder_right.angle = 95
+        self.servo_front_shoulder_right.angle = 90
         self.servo_front_leg_right.angle = 30
-        self.servo_front_feet_right.angle = 170
+        self.servo_front_feet_right.angle = 175
 
-    def calibrate_leg(self):
+    def standing_position(self):
 
-        self.servo_rear_shoulder_left.angle = 90
-        self.servo_rear_leg_left.angle = 135
-        self.servo_rear_feet_left.angle = 20
+        variation_leg = 50
+        variation_feet = 70
+
+        self.servo_rear_shoulder_left.angle = 85
+        self.servo_rear_leg_left.angle = 135 - variation_leg
+        self.servo_rear_feet_left.angle = 10 + variation_feet
 
         self.servo_rear_shoulder_right.angle = 95
-        self.servo_rear_leg_right.angle = 25
-        self.servo_rear_feet_right.angle = 160
+        self.servo_rear_leg_right.angle = 25 + variation_leg
+        self.servo_rear_feet_right.angle = 160 - variation_feet
+
+        time.sleep(0.1)
 
         self.servo_front_shoulder_left.angle = 90
-        self.servo_front_leg_left.angle = 165
-        self.servo_front_feet_left.angle = 20
+        self.servo_front_leg_left.angle = 165 - variation_leg + 10
+        self.servo_front_feet_left.angle = 20 + variation_feet - 10
 
-        self.servo_front_shoulder_right.angle = 95
-        self.servo_front_leg_right.angle = 30
-        self.servo_front_feet_right.angle = 170
+        self.servo_front_shoulder_right.angle = 90
+        self.servo_front_leg_right.angle = 30 + variation_leg - 10
+        self.servo_front_feet_right.angle = 175 - variation_feet + 10
+
+    def body_move_position(self):
+        pass
 
     def set_position(self, raw_value):
 
