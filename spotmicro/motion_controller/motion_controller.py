@@ -437,23 +437,23 @@ class MotionController:
         variation_leg = 50
         variation_feet = 70
 
-        self.servo_rear_shoulder_left.angle = 80 + 10
-        self.servo_rear_leg_left.angle = 135 - variation_leg
-        self.servo_rear_feet_left.angle = 10 + variation_feet
+        self.servo_rear_shoulder_left.angle = self.servo_rear_shoulder_left_rest_angle + 10
+        self.servo_rear_leg_left.angle = self.servo_rear_leg_left_rest_angle - variation_leg
+        self.servo_rear_feet_left.angle = self.servo_rear_feet_left_rest_angle + variation_feet
 
-        self.servo_rear_shoulder_right.angle = 105 - 10
-        self.servo_rear_leg_right.angle = 25 + variation_leg
-        self.servo_rear_feet_right.angle = 160 - variation_feet
+        self.servo_rear_shoulder_right.angle = self.servo_rear_shoulder_right_rest_angle - 10
+        self.servo_rear_leg_right.angle = self.servo_rear_leg_right_rest_angle + variation_leg
+        self.servo_rear_feet_right.angle = self.servo_rear_feet_right_rest_angle - variation_feet
 
         time.sleep(0.05)
 
-        self.servo_front_shoulder_left.angle = 90 - 10
-        self.servo_front_leg_left.angle = 165 - variation_leg + 5
-        self.servo_front_feet_left.angle = 20 + variation_feet - 5
+        self.servo_front_shoulder_left.angle = self.servo_front_shoulder_left_rest_angle - 10
+        self.servo_front_leg_left.angle = self.servo_front_leg_left_rest_angle - variation_leg + 5
+        self.servo_front_feet_left.angle = self.servo_front_feet_left_rest_angle + variation_feet - 5
 
-        self.servo_front_shoulder_right.angle = 90 + 10
-        self.servo_front_leg_right.angle = 30 + variation_leg - 5
-        self.servo_front_feet_right.angle = 175 - variation_feet + 5
+        self.servo_front_shoulder_right.angle = self.servo_front_shoulder_right_rest_angle + 10
+        self.servo_front_leg_right.angle = self.servo_front_leg_right_rest_angle + variation_leg - 5
+        self.servo_front_feet_right.angle = self.servo_front_feet_right_rest_angle - variation_feet + 5
 
     def body_move_position_right(self):
 
@@ -462,23 +462,23 @@ class MotionController:
         variation_leg = 50
         variation_feet = 70
 
-        self.servo_rear_shoulder_left.angle = 80 + 10 + move
-        self.servo_rear_leg_left.angle = 135 - variation_leg
-        self.servo_rear_feet_left.angle = 10 + variation_feet
+        self.servo_rear_shoulder_left.angle = self.servo_rear_shoulder_left_rest_angle + 10 + move
+        self.servo_rear_leg_left.angle = self.servo_rear_leg_left_rest_angle - variation_leg
+        self.servo_rear_feet_left.angle = self.servo_rear_feet_left_rest_angle + variation_feet
 
-        self.servo_rear_shoulder_right.angle = 105 - 10 + move
-        self.servo_rear_leg_right.angle = 25 + variation_leg
-        self.servo_rear_feet_right.angle = 160 - variation_feet
+        self.servo_rear_shoulder_right.angle = self.servo_rear_shoulder_right_rest_angle - 10 + move
+        self.servo_rear_leg_right.angle = self.servo_rear_leg_right_rest_angle + variation_leg
+        self.servo_rear_feet_right.angle = self.servo_rear_feet_right_rest_angle - variation_feet
 
         time.sleep(0.05)
 
-        self.servo_front_shoulder_left.angle = 90 - 10 - move
-        self.servo_front_leg_left.angle = 165 - variation_leg + 5
-        self.servo_front_feet_left.angle = 20 + variation_feet - 5
+        self.servo_front_shoulder_left.angle = self.servo_front_shoulder_left_rest_angle - 10 - move
+        self.servo_front_leg_left.angle = self.servo_front_leg_left_rest_angle - variation_leg + 5
+        self.servo_front_feet_left.angle = self.servo_front_feet_left_rest_angle + variation_feet - 5
 
-        self.servo_front_shoulder_right.angle = 90 + 10 - move
-        self.servo_front_leg_right.angle = 30 + variation_leg - 5
-        self.servo_front_feet_right.angle = 175 - variation_feet + 5
+        self.servo_front_shoulder_right.angle = self.servo_front_shoulder_right_rest_angle + 10 - move
+        self.servo_front_leg_right.angle = self.servo_front_leg_right_rest_angle + variation_leg - 5
+        self.servo_front_feet_right.angle = self.servo_front_feet_right_rest_angle - variation_feet + 5
 
     def body_move_position_left(self):
 
@@ -487,25 +487,25 @@ class MotionController:
         variation_leg = 50
         variation_feet = 70
 
-        self.servo_rear_shoulder_left.angle = 80 + 10 - move
-        self.servo_rear_leg_left.angle = 135 - variation_leg
-        self.servo_rear_feet_left.angle = 10 + variation_feet
+        self.servo_rear_shoulder_left.angle = self.servo_rear_shoulder_left_rest_angle + 10 - move
+        self.servo_rear_leg_left.angle = self.servo_rear_leg_left_rest_angle - variation_leg
+        self.servo_rear_feet_left.angle = self.servo_rear_feet_left_rest_angle + variation_feet
 
-        self.servo_rear_shoulder_right.angle = 105 - 10 - move
-        self.servo_rear_leg_right.angle = 25 + variation_leg
-        self.servo_rear_feet_right.angle = 160 - variation_feet
+        self.servo_rear_shoulder_right.angle = self.servo_rear_shoulder_right_rest_angle - 10 - move
+        self.servo_rear_leg_right.angle = self.servo_rear_leg_right_rest_angle + variation_leg
+        self.servo_rear_feet_right.angle = self.servo_rear_feet_right_rest_angle - variation_feet
 
         time.sleep(0.05)
 
-        self.servo_front_shoulder_left.angle = 90 - 10 + move
-        self.servo_front_leg_left.angle = 165 - variation_leg + 5
-        self.servo_front_feet_left.angle = 20 + variation_feet - 5
+        self.servo_front_shoulder_left.angle = self.servo_front_shoulder_left_rest_angle - 10 + move
+        self.servo_front_leg_left.angle = self.servo_front_leg_left_rest_angle - variation_leg + 5
+        self.servo_front_feet_left.angle = self.servo_front_feet_left_rest_angle + variation_feet - 5
 
-        self.servo_front_shoulder_right.angle = 90 + 10 + move
-        self.servo_front_leg_right.angle = 30 + variation_leg - 5
-        self.servo_front_feet_right.angle = 175 - variation_feet + 5
+        self.servo_front_shoulder_right.angle = self.servo_front_shoulder_right_rest_angle + 10 + move
+        self.servo_front_leg_right.angle = self.servo_front_leg_right_rest_angle + variation_leg - 5
+        self.servo_front_feet_right.angle = self.servo_front_feet_right_rest_angle - variation_feet + 5
 
-    def set_position(self, raw_value):
+    def arm_set_position(self, raw_value):
 
         left_position = int(self.maprange((-1, 1), (0, 180), raw_value))
         right_position = int(self.maprange((1, -1), (0, 180), raw_value))
