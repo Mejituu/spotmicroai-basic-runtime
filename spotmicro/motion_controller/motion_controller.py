@@ -202,9 +202,6 @@ class MotionController:
                 if event['x']:
                     self.body_move_position_left()
 
-                if event['hat0x']:
-                    self.rest_position_increment()
-
                 self._previous_event = event
 
             except queue.Empty as e:
