@@ -34,61 +34,73 @@ class Config(metaclass=Singleton):
     MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_CHANNEL = 'motion_controller[*].servos[*].rear_shoulder_left[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].rear_shoulder_left[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].rear_shoulder_left[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_REST_ANGLE = 'motion_controller[*].servos[*].rear_shoulder_left[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_PCA9685 = 'motion_controller[*].servos[*].rear_leg_left[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_CHANNEL = 'motion_controller[*].servos[*].rear_leg_left[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].rear_leg_left[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].rear_leg_left[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_REST_ANGLE = 'motion_controller[*].servos[*].rear_leg_left[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_PCA9685 = 'motion_controller[*].servos[*].rear_feet_left[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_CHANNEL = 'motion_controller[*].servos[*].rear_feet_left[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].rear_feet_left[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].rear_feet_left[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_REST_ANGLE = 'motion_controller[*].servos[*].rear_feet_left[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_RIGHT_PCA9685 = 'motion_controller[*].servos[*].rear_shoulder_right[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_RIGHT_CHANNEL = 'motion_controller[*].servos[*].rear_shoulder_right[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].rear_shoulder_right[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].rear_shoulder_right[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_REST_ANGLE = 'motion_controller[*].servos[*].rear_shoulder_right[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_PCA9685 = 'motion_controller[*].servos[*].rear_leg_right[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_CHANNEL = 'motion_controller[*].servos[*].rear_leg_right[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].rear_leg_right[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].rear_leg_right[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_REST_ANGLE = 'motion_controller[*].servos[*].rear_leg_right[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_PCA9685 = 'motion_controller[*].servos[*].rear_feet_right[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_CHANNEL = 'motion_controller[*].servos[*].rear_feet_right[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].rear_feet_right[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].rear_feet_right[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_REST_ANGLE = 'motion_controller[*].servos[*].rear_feet_right[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_PCA9685 = 'motion_controller[*].servos[*].front_shoulder_left[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_CHANNEL = 'motion_controller[*].servos[*].front_shoulder_left[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].front_shoulder_left[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].front_shoulder_left[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_REST_ANGLE = 'motion_controller[*].servos[*].front_shoulder_left[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_PCA9685 = 'motion_controller[*].servos[*].front_leg_left[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_CHANNEL = 'motion_controller[*].servos[*].front_leg_left[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].front_leg_left[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].front_leg_left[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_REST_ANGLE = 'motion_controller[*].servos[*].front_leg_left[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_PCA9685 = 'motion_controller[*].servos[*].front_feet_left[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_CHANNEL = 'motion_controller[*].servos[*].front_feet_left[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_MIN_PULSE = 'motion_controller[*].servos[*].front_feet_left[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_MAX_PULSE = 'motion_controller[*].servos[*].front_feet_left[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_REST_ANGLE = 'motion_controller[*].servos[*].front_feet_left[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_PCA9685 = 'motion_controller[*].servos[*].front_shoulder_right[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_CHANNEL = 'motion_controller[*].servos[*].front_shoulder_right[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].front_shoulder_right[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].front_shoulder_right[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_REST_ANGLE = 'motion_controller[*].servos[*].front_shoulder_right[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_PCA9685 = 'motion_controller[*].servos[*].front_leg_right[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_CHANNEL = 'motion_controller[*].servos[*].front_leg_right[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].front_leg_right[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].front_leg_right[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_REST_ANGLE = 'motion_controller[*].servos[*].front_leg_right[*].rest_angle | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_PCA9685 = 'motion_controller[*].servos[*].front_feet_right[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_CHANNEL = 'motion_controller[*].servos[*].front_feet_right[*].channel | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].front_feet_right[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].front_feet_right[*].max_pulse | [0] | [0] | [0]'
+    MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_REST_ANGLE = 'motion_controller[*].servos[*].front_feet_right[*].rest_angle | [0] | [0] | [0]'
 
     values = {}
 
