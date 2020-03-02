@@ -157,12 +157,12 @@ class Config(metaclass=Singleton):
         PCA9685_REFERENCE_CLOCK_SPEED = 'motion_controller[*].boards[*].pca9685_' + str(PCA9685) + '[*].reference_clock_speed | [0] | [0] | [0]'
         PCA9685_FREQUENCY = 'motion_controller[*].boards[*].pca9685_' + str(PCA9685) + '[*].frequency | [0] | [0] | [0]'
 
-        log.debug('PCA9685_ADDRESS: ' + str(jmespath.search(PCA9685_ADDRESS, self.values)))
-        log.debug('PCA9685_REFERENCE_CLOCK_SPEED: ' + str(jmespath.search(PCA9685_REFERENCE_CLOCK_SPEED, self.values)))
-        log.debug('PCA9685_FREQUENCY: ' + str(jmespath.search(PCA9685_FREQUENCY, self.values)))
-        log.debug('CHANNEL: ' + str(jmespath.search(CHANNEL, self.values)))
-        log.debug('MIN_PULSE: ' + str(jmespath.search(MIN_PULSE, self.values)))
-        log.debug('MAX_PULSE: ' + str(jmespath.search(MAX_PULSE, self.values)))
-        log.debug('REST_ANGLE: ' + str(jmespath.search(REST_ANGLE, self.values)))
+        log.info('PCA9685_ADDRESS: ' + str(jmespath.search(PCA9685_ADDRESS, self.values)))
+        log.info('PCA9685_REFERENCE_CLOCK_SPEED: ' + str(jmespath.search(PCA9685_REFERENCE_CLOCK_SPEED, self.values)))
+        log.info('PCA9685_FREQUENCY: ' + str(jmespath.search(PCA9685_FREQUENCY, self.values)))
+        log.info('CHANNEL: ' + str(jmespath.search(CHANNEL, self.values)))
+        log.info('MIN_PULSE: ' + str(jmespath.search(MIN_PULSE, self.values)))
+        log.info('MAX_PULSE: ' + str(jmespath.search(MAX_PULSE, self.values)))
+        log.info('REST_ANGLE: ' + str(jmespath.search(REST_ANGLE, self.values)))
 
         return jmespath.search(PCA9685_ADDRESS, self.values), jmespath.search(PCA9685_REFERENCE_CLOCK_SPEED, self.values), jmespath.search(PCA9685_FREQUENCY, self.values), jmespath.search(CHANNEL, self.values), jmespath.search(MIN_PULSE, self.values), jmespath.search(MAX_PULSE, self.values), jmespath.search(REST_ANGLE, self.values)
