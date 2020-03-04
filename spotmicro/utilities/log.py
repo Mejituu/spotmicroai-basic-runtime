@@ -31,7 +31,7 @@ class Logger:
 
         logger = logging.getLogger("{:<32}".format(logger_name))
 
-        logger.setLevel(logging.DEBUG)
+        logger.setLevel(logging.INFO)
 
         # add the handlers to logger
         logger.addHandler(self.logging_file_handler)
