@@ -208,9 +208,10 @@ class MotionController:
                 # If we don't get an order in 30 seconds we staydown the robot.
                 log.info('Inactivity lasted 30 seconds, shutting down the servos, '
                          'press start to reactivate')
-                self.rest_position()
-                time.sleep(0.5)
-                self.deactivate_pca9685_boards()
+                if self.is_activated:
+                    self.rest_position()
+                    time.sleep(0.5)
+                    self.deactivate_pca9685_boards()
 
             except Exception as e:
                 log.error('Unknown problem while processing the queue of the motion controller', e)

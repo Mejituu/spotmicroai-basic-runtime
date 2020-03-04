@@ -110,7 +110,7 @@ class RemoteControllerController:
 
         connected_device = Config().get(Config.REMOTE_CONTROLLER_CONTROLLER_DEVICE)
 
-        log.info('Looking for connected devices')
+        log.info('The remote controller is not detected, looking for connected devices')
         self.connected_device = False
         for fn in os.listdir('/dev/input'):
             # if fn.startswith('js'):
