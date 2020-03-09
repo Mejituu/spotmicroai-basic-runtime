@@ -102,6 +102,30 @@ class Config(metaclass=Singleton):
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].front_feet_right[*].max_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_REST_ANGLE = 'motion_controller[*].servos[*].front_feet_right[*].rest_angle | [0] | [0] | [0]'
 
+    ARM_CONTROLLER_SERVOS_ARM_ROTATION_PCA9685 = 'motion_controller[*].servos[*].arm_rotation[*].pca9685 | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_ROTATION_CHANNEL = 'motion_controller[*].servos[*].arm_rotation[*].channel | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_ROTATION_MIN_PULSE = 'motion_controller[*].servos[*].arm_rotation[*].min_pulse | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_ROTATION_MAX_PULSE = 'motion_controller[*].servos[*].arm_rotation[*].max_pulse | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_ROTATION_REST_ANGLE = 'motion_controller[*].servos[*].arm_rotation[*].rest_angle | [0] | [0] | [0]'
+
+    ARM_CONTROLLER_SERVOS_ARM_LIFT_PCA9685 = 'motion_controller[*].servos[*].arm_lift[*].pca9685 | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_LIFT_CHANNEL = 'motion_controller[*].servos[*].arm_lift[*].channel | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_LIFT_MIN_PULSE = 'motion_controller[*].servos[*].arm_lift[*].min_pulse | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_LIFT_MAX_PULSE = 'motion_controller[*].servos[*].arm_lift[*].max_pulse | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_LIFT_REST_ANGLE = 'motion_controller[*].servos[*].arm_lift[*].rest_angle | [0] | [0] | [0]'
+
+    ARM_CONTROLLER_SERVOS_ARM_RANGE_PCA9685 = 'motion_controller[*].servos[*].arm_range[*].pca9685 | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_RANGE_CHANNEL = 'motion_controller[*].servos[*].arm_range[*].channel | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_RANGE_MIN_PULSE = 'motion_controller[*].servos[*].arm_range[*].min_pulse | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_RANGE_MAX_PULSE = 'motion_controller[*].servos[*].arm_range[*].max_pulse | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_RANGE_REST_ANGLE = 'motion_controller[*].servos[*].arm_range[*].rest_angle | [0] | [0] | [0]'
+
+    ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_PCA9685 = 'motion_controller[*].servos[*].arm_cam_tilt[*].pca9685 | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_CHANNEL = 'motion_controller[*].servos[*].arm_cam_tilt[*].channel | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_MIN_PULSE = 'motion_controller[*].servos[*].arm_cam_tilt[*].min_pulse | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_MAX_PULSE = 'motion_controller[*].servos[*].arm_cam_tilt[*].max_pulse | [0] | [0] | [0]'
+    ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_REST_ANGLE = 'motion_controller[*].servos[*].arm_cam_tilt[*].rest_angle | [0] | [0] | [0]'
+
     values = {}
 
     def __init__(self):
