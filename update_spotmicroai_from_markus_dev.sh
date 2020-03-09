@@ -8,6 +8,6 @@ git clean -df
 git checkout markus_dev
 git pull
 
-find . -type f -iname "*.sh" -exec chmod +x {} \;
+# find . -type f -iname "*.sh" -exec chmod +x {} \;
 
-~/spotmicroai/install/activate.sh
+# ~/spotmicroai/install/activate.sh
