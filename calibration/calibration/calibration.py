@@ -19,9 +19,11 @@ log.info('Calibrate rest position...')
 
 pca = None
 
+gpio_port = Config().get(Config.ABORT_CONTROLLER_GPIO_PORT)
+
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(self.gpio_port, GPIO.OUT)
-GPIO.output(self.gpio_port, False)
+GPIO.setup(gpio_port, GPIO.OUT)
+GPIO.output(gpio_port, False)
 
 i2c = busio.I2C(SCL, SDA)
 
