@@ -8,6 +8,6 @@ git clean -df
 git checkout development
 git pull
 
-chmod --recursive +x *.sh
+find . -type f -iname "*.sh" -exec chmod +x {} \;
 
 ~/spotmicroai/install/activate.sh
