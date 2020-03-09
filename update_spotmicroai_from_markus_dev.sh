@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#Test
-
 cd ~
 cd spotmicroai
 
