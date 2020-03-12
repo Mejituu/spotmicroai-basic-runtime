@@ -230,8 +230,8 @@ class MotionController:
                 if event['x']:
                     self.body_move_position_left()
 
-                if event['hat0x']:
-                    self.arm_set_position(event['hat0x'])
+                if event['t1'+'lx']:
+                    self.arm_set_position(event['lx'])
 
 
                 self._previous_event = event
