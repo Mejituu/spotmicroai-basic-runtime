@@ -2,7 +2,7 @@
 
 cd ~/spotmicroai
 
-./update_spotmicroai.sh
+#./update_spotmicroai.sh
 
 export PYTHONPATH=.
 
