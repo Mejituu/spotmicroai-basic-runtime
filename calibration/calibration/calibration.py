@@ -8,6 +8,7 @@ from pick import pick
 import time
 import os
 import sys
+import RPi.GPIO as GPIO
 
 from spotmicroai.utilities.log import Logger
 from spotmicroai.utilities.config import Config
@@ -17,6 +18,12 @@ log = Logger().setup_logger('CALIBRATE SERVOS')
 log.info('Calibrate rest position...')
 
 pca = None
+
+gpio_port = Config().get(Config.ABORT_CONTROLLER_GPIO_PORT)
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(gpio_port, GPIO.OUT)
+GPIO.output(gpio_port, False)
 
 i2c = busio.I2C(SCL, SDA)
 
