@@ -2,7 +2,7 @@ import signal
 import sys
 
 import queue
-
+import os
 import busio
 from board import SCL, SDA
 from adafruit_pca9685 import PCA9685
@@ -172,7 +172,6 @@ class MotionController:
 
             try:
 
-                # If we don't get an order in 30 seconds we staydown the robot.
                 event = self._motion_queue.get(block=True, timeout=60)
 
                 # log.debug(event)
@@ -189,24 +188,32 @@ class MotionController:
                         self.activate_servos()
                         self.rest_position()
 
+                if not self.is_activated:
+                    log.info('Press START/OPTIONS to enable the servos')
+                    continue
+
                 if event['a']:
-                    # print('A')
                     self.rest_position()
 
-                if event['y']:
-                    self.standing_position()
+                if event['hat0y']:
+                    self.body_move_body_up_and_down(event['hat0y'])
 
-                if event['b']:
-                    self.body_move_position_right()
+                if event['hat0x']:
+                    self.body_move_body_left_right(event['hat0x'])
 
-                if event['x']:
-                    self.body_move_position_left()
+                if event['ly']:
+                    self.body_move_body_up_and_down_analog(event['ly'])
 
-                self._previous_event = event
+                if event['lx']:
+                    self.body_move_body_left_right_analog(event['lx'])
+
+                if event['hat0x'] and event['tl2']:
+                    self.body_move_body_front_rear_up_down(event['hat0x'])
+
+                self.move()
 
             except queue.Empty as e:
-                # If we don't get an order in 30 seconds we staydown the robot.
-                log.info('Inactivity lasted 30 seconds, shutting down the servos, '
+                log.info('Inactivity lasted 60 seconds, shutting down the servos, '
                          'press start to reactivate')
                 if self.is_activated:
                     self.rest_position()
@@ -214,7 +221,8 @@ class MotionController:
                     self.deactivate_pca9685_boards()
 
             except Exception as e:
-                log.error('Unknown problem while processing the queue of the motion controller', e)
+                log.error('Unknown problem while processing the queue of the motion controller')
+                log.error(' - Most likely a servo is not able to get to the assigned position')
 
     def load_pca9685_boards_configuration(self):
         self.pca9685_1_address = int(Config().get(Config.MOTION_CONTROLLER_BOARDS_PCA9685_1_ADDRESS), 0)
@@ -412,113 +420,217 @@ class MotionController:
             self.servo_front_feet_right = servo.Servo(self.pca9685_2.channels[self.servo_front_feet_right_channel])
         self.servo_front_feet_right.set_pulse_width_range(min_pulse=self.servo_front_feet_right_min_pulse, max_pulse=self.servo_front_feet_right_max_pulse)
 
+    def move(self):
+
+        try:
+            self.servo_rear_shoulder_left.angle = self.servo_rear_shoulder_left_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_rear_shoulder_left angle requested')
+
+        try:
+            self.servo_rear_leg_left.angle = self.servo_rear_leg_left_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_rear_leg_left angle requested')
+
+        try:
+            self.servo_rear_feet_left.angle = self.servo_rear_feet_left_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_rear_feet_left angle requested')
+
+        try:
+            self.servo_rear_shoulder_right.angle = self.servo_rear_shoulder_right_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_rear_shoulder_right angle requested')
+
+        try:
+            self.servo_rear_leg_right.angle = self.servo_rear_leg_right_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_rear_leg_right angle requested')
+
+        try:
+            self.servo_rear_feet_right.angle = self.servo_rear_feet_right_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_rear_feet_right angle requested')
+
+        try:
+            self.servo_front_shoulder_left.angle = self.servo_front_shoulder_left_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_front_shoulder_left angle requested')
+
+        try:
+            self.servo_front_leg_left.angle = self.servo_front_leg_left_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_front_leg_left angle requested')
+
+        try:
+            self.servo_front_feet_left.angle = self.servo_front_feet_left_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_front_feet_left angle requested')
+
+        try:
+            self.servo_front_shoulder_right.angle = self.servo_front_shoulder_right_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_front_shoulder_right angle requested')
+
+        try:
+            self.servo_front_leg_right.angle = self.servo_front_leg_right_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_front_leg_right angle requested')
+
+        try:
+            self.servo_front_feet_right.angle = self.servo_front_feet_right_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_front_feet_right angle requested')
+
+        # time.sleep(0.5)
+
     def rest_position(self):
 
-        self.servo_rear_shoulder_left.angle = self.servo_rear_shoulder_left_rest_angle
-        self.servo_rear_leg_left.angle = self.servo_rear_leg_left_rest_angle
-        self.servo_rear_feet_left.angle = self.servo_rear_feet_left_rest_angle
+        self.servo_rear_shoulder_left_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_REST_ANGLE)
+        self.servo_rear_leg_left_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_REST_ANGLE)
+        self.servo_rear_feet_left_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_REST_ANGLE)
+        self.servo_rear_shoulder_right_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_RIGHT_REST_ANGLE)
+        self.servo_rear_leg_right_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_REST_ANGLE)
+        self.servo_rear_feet_right_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_REST_ANGLE)
+        self.servo_front_shoulder_left_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_LEFT_REST_ANGLE)
+        self.servo_front_leg_left_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_REST_ANGLE)
+        self.servo_front_feet_left_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_REST_ANGLE)
+        self.servo_front_shoulder_right_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_SHOULDER_RIGHT_REST_ANGLE)
+        self.servo_front_leg_right_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_REST_ANGLE)
+        self.servo_front_feet_right_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_REST_ANGLE)
 
-        self.servo_rear_shoulder_right.angle = self.servo_rear_shoulder_right_rest_angle
-        self.servo_rear_leg_right.angle = self.servo_rear_leg_right_rest_angle
-        self.servo_rear_feet_right.angle = self.servo_rear_feet_right_rest_angle
+    def body_move_body_up_and_down(self, raw_value):
 
-        self.servo_front_shoulder_left.angle = self.servo_front_shoulder_left_rest_angle
-        self.servo_front_leg_left.angle = self.servo_front_leg_left_rest_angle
-        self.servo_front_feet_left.angle = self.servo_front_feet_left_rest_angle
+        range = 10
+        range2 = 15
 
-        self.servo_front_shoulder_right.angle = self.servo_front_shoulder_right_rest_angle
-        self.servo_front_leg_right.angle = self.servo_front_leg_right_rest_angle
-        self.servo_front_feet_right.angle = self.servo_front_feet_right_rest_angle
+        if raw_value < 0:
+            self.servo_rear_leg_left_rest_angle -= range
+            self.servo_rear_feet_left_rest_angle += range2
+            self.servo_rear_leg_right_rest_angle += range
+            self.servo_rear_feet_right_rest_angle -= range2
+            self.servo_front_leg_left_rest_angle -= range
+            self.servo_front_feet_left_rest_angle += range2
+            self.servo_front_leg_right_rest_angle += range
+            self.servo_front_feet_right_rest_angle -= range2
 
-    def standing_position(self):
+        elif raw_value > 0:
+            self.servo_rear_leg_left_rest_angle += range
+            self.servo_rear_feet_left_rest_angle -= range2
+            self.servo_rear_leg_right_rest_angle -= range
+            self.servo_rear_feet_right_rest_angle += range2
+            self.servo_front_leg_left_rest_angle += range
+            self.servo_front_feet_left_rest_angle -= range2
+            self.servo_front_leg_right_rest_angle -= range
+            self.servo_front_feet_right_rest_angle += range2
 
-        variation_leg = 50
-        variation_feet = 70
+        else:
+            self.rest_position()
 
-        self.servo_rear_shoulder_left.angle = self.servo_rear_shoulder_left_rest_angle + 10
-        self.servo_rear_leg_left.angle = self.servo_rear_leg_left_rest_angle - variation_leg
-        self.servo_rear_feet_left.angle = self.servo_rear_feet_left_rest_angle + variation_feet
+    def body_move_body_up_and_down_analog(self, raw_value):
 
-        self.servo_rear_shoulder_right.angle = self.servo_rear_shoulder_right_rest_angle - 10
-        self.servo_rear_leg_right.angle = self.servo_rear_leg_right_rest_angle + variation_leg
-        self.servo_rear_feet_right.angle = self.servo_rear_feet_right_rest_angle - variation_feet
+        delta = int(self.maprange((-1, 1), (0, 5), raw_value))
 
-        time.sleep(0.05)
+        if raw_value < 0:
+            self.servo_rear_leg_left_rest_angle -= 1
+            self.servo_rear_feet_left_rest_angle += 1.5
+            self.servo_rear_leg_right_rest_angle += 1
+            self.servo_rear_feet_right_rest_angle -= 1.5
+            self.servo_front_leg_left_rest_angle -= 1
+            self.servo_front_feet_left_rest_angle += 1.5
+            self.servo_front_leg_right_rest_angle += 1
+            self.servo_front_feet_right_rest_angle -= 1.5
 
-        self.servo_front_shoulder_left.angle = self.servo_front_shoulder_left_rest_angle - 10
-        self.servo_front_leg_left.angle = self.servo_front_leg_left_rest_angle - variation_leg + 5
-        self.servo_front_feet_left.angle = self.servo_front_feet_left_rest_angle + variation_feet - 5
+        elif raw_value > 0:
+            self.servo_rear_leg_left_rest_angle += 1
+            self.servo_rear_feet_left_rest_angle -= 1.5
+            self.servo_rear_leg_right_rest_angle -= 1
+            self.servo_rear_feet_right_rest_angle += 1.5
+            self.servo_front_leg_left_rest_angle += 1
+            self.servo_front_feet_left_rest_angle -= 1.5
+            self.servo_front_leg_right_rest_angle -= 1
+            self.servo_front_feet_right_rest_angle += 1.5
 
-        self.servo_front_shoulder_right.angle = self.servo_front_shoulder_right_rest_angle + 10
-        self.servo_front_leg_right.angle = self.servo_front_leg_right_rest_angle + variation_leg - 5
-        self.servo_front_feet_right.angle = self.servo_front_feet_right_rest_angle - variation_feet + 5
+        else:
+            self.rest_position()
 
-    def body_move_position_right(self):
+    def body_move_body_left_right(self, raw_value):
 
-        move = 20
+        range = 5
 
-        variation_leg = 50
-        variation_feet = 70
+        if raw_value < 0:
+            self.servo_rear_shoulder_left_rest_angle -= range
+            self.servo_rear_shoulder_right_rest_angle -= range
+            self.servo_front_shoulder_left_rest_angle += range
+            self.servo_front_shoulder_right_rest_angle += range
 
-        self.servo_rear_shoulder_left.angle = self.servo_rear_shoulder_left_rest_angle + 10 + move
-        self.servo_rear_leg_left.angle = self.servo_rear_leg_left_rest_angle - variation_leg
-        self.servo_rear_feet_left.angle = self.servo_rear_feet_left_rest_angle + variation_feet
+        elif raw_value > 0:
+            self.servo_rear_shoulder_left_rest_angle += range
+            self.servo_rear_shoulder_right_rest_angle += range
+            self.servo_front_shoulder_left_rest_angle -= range
+            self.servo_front_shoulder_right_rest_angle -= range
 
-        self.servo_rear_shoulder_right.angle = self.servo_rear_shoulder_right_rest_angle - 10 + move
-        self.servo_rear_leg_right.angle = self.servo_rear_leg_right_rest_angle + variation_leg
-        self.servo_rear_feet_right.angle = self.servo_rear_feet_right_rest_angle - variation_feet
+        else:
+            self.rest_position()
 
-        time.sleep(0.05)
+    def body_move_body_left_right_analog(self, raw_value):
 
-        self.servo_front_shoulder_left.angle = self.servo_front_shoulder_left_rest_angle - 10 - move
-        self.servo_front_leg_left.angle = self.servo_front_leg_left_rest_angle - variation_leg + 5
-        self.servo_front_feet_left.angle = self.servo_front_feet_left_rest_angle + variation_feet - 5
+        delta = int(self.maprange((-1, 1), (0, 2), raw_value))
 
-        self.servo_front_shoulder_right.angle = self.servo_front_shoulder_right_rest_angle + 10 - move
-        self.servo_front_leg_right.angle = self.servo_front_leg_right_rest_angle + variation_leg - 5
-        self.servo_front_feet_right.angle = self.servo_front_feet_right_rest_angle - variation_feet + 5
+        if raw_value < 0:
+            self.servo_rear_shoulder_left_rest_angle -= 1
+            self.servo_rear_shoulder_right_rest_angle -= 1
+            self.servo_front_shoulder_left_rest_angle += 1
+            self.servo_front_shoulder_right_rest_angle += 1
 
-    def body_move_position_left(self):
+        elif raw_value > 0:
+            self.servo_rear_shoulder_left_rest_angle += 1
+            self.servo_rear_shoulder_right_rest_angle += 1
+            self.servo_front_shoulder_left_rest_angle -= 1
+            self.servo_front_shoulder_right_rest_angle -= 1
 
-        move = 20
+        else:
+            self.rest_position()
 
-        variation_leg = 50
-        variation_feet = 70
+    def body_move_body_front_rear_up_down(self, raw_value):
 
-        self.servo_rear_shoulder_left.angle = self.servo_rear_shoulder_left_rest_angle + 10 - move
-        self.servo_rear_leg_left.angle = self.servo_rear_leg_left_rest_angle - variation_leg
-        self.servo_rear_feet_left.angle = self.servo_rear_feet_left_rest_angle + variation_feet
+        range = 5
 
-        self.servo_rear_shoulder_right.angle = self.servo_rear_shoulder_right_rest_angle - 10 - move
-        self.servo_rear_leg_right.angle = self.servo_rear_leg_right_rest_angle + variation_leg
-        self.servo_rear_feet_right.angle = self.servo_rear_feet_right_rest_angle - variation_feet
+        if raw_value < 0:
+            self.servo_rear_shoulder_left_rest_angle -= range
+            self.servo_rear_shoulder_right_rest_angle += range
+            self.servo_front_shoulder_left_rest_angle -= range
+            self.servo_front_shoulder_right_rest_angle += range
 
-        time.sleep(0.05)
+        elif raw_value > 0:
+            self.servo_rear_shoulder_left_rest_angle += range
+            self.servo_rear_shoulder_right_rest_angle -= range
+            self.servo_front_shoulder_left_rest_angle += range
+            self.servo_front_shoulder_right_rest_angle -= range
 
-        self.servo_front_shoulder_left.angle = self.servo_front_shoulder_left_rest_angle - 10 + move
-        self.servo_front_leg_left.angle = self.servo_front_leg_left_rest_angle - variation_leg + 5
-        self.servo_front_feet_left.angle = self.servo_front_feet_left_rest_angle + variation_feet - 5
+        else:
+            self.rest_position()
 
-        self.servo_front_shoulder_right.angle = self.servo_front_shoulder_right_rest_angle + 10 + move
-        self.servo_front_leg_right.angle = self.servo_front_leg_right_rest_angle + variation_leg - 5
-        self.servo_front_feet_right.angle = self.servo_front_feet_right_rest_angle - variation_feet + 5
+    move_shoulders_left_right_raw_value = None
 
-    def arm_set_position(self, raw_value):
+    def move_shoulders_left_right(self, raw_value):
 
-        left_position = int(self.maprange((-1, 1), (0, 180), raw_value))
-        right_position = int(self.maprange((1, -1), (0, 180), raw_value))
+        if raw_value == self.move_shoulders_left_right_raw_value:
+            return
 
-        if int(self.servo_rear_feet_left.angle) != int(left_position):
-            self.servo_rear_feet_left.angle = left_position
+        shoulders_yield = 25
 
-        if int(self.servo_rear_feet_right.angle) != int(right_position):
-            self.servo_rear_feet_right.angle = right_position
+        servo_rear_shoulder_left_position = int(self.maprange((-1, 1), (self.servo_rear_shoulder_left_rest_angle - shoulders_yield, self.servo_rear_shoulder_left_rest_angle + shoulders_yield), raw_value))
+        servo_front_shoulder_left_position = int(self.maprange((-1, 1), (self.servo_front_shoulder_left_rest_angle + shoulders_yield, self.servo_front_shoulder_left_rest_angle - shoulders_yield), raw_value))
+        servo_rear_shoulder_right_position = int(self.maprange((-1, 1), (self.servo_rear_shoulder_right_rest_angle - shoulders_yield, self.servo_rear_shoulder_right_rest_angle + shoulders_yield), raw_value))
+        servo_front_shoulder_right_position = int(self.maprange((-1, 1), (self.servo_front_shoulder_right_rest_angle + shoulders_yield, self.servo_front_shoulder_right_rest_angle - shoulders_yield), raw_value))
 
-        self.servo_rear_shoulder_left.angle = 100
-        self.servo_rear_leg_left.angle = 90
+        self.servo_rear_shoulder_left_rest_angle = servo_rear_shoulder_left_position
+        self.servo_front_shoulder_left_rest_angle = servo_front_shoulder_left_position
+        self.servo_rear_shoulder_right_rest_angle = servo_rear_shoulder_right_position
+        self.servo_front_shoulder_right_rest_angle = servo_front_shoulder_right_position
 
-        self.servo_rear_shoulder_right.angle = 80
-        self.servo_rear_leg_right.angle = 90
+        self.move_shoulders_left_right_raw_value = raw_value
 
     def maprange(self, a, b, s):
         (a1, a2), (b1, b2) = a, b

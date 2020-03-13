@@ -2,6 +2,7 @@
 
 cd ~/spotmicroai || exit
 
+#For example
 #export PASSWORD=""
 #export REMOTE_FOLDER="franferri@192.168.1.104:/Users/franferri/projects/basic-runtime/"
 

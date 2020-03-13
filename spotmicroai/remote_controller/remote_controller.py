@@ -8,6 +8,8 @@ import sys
 from spotmicroai.utilities.log import Logger
 from spotmicroai.utilities.config import Config
 import spotmicroai.utilities.queues as queues
+import queue
+import throttle
 
 log = Logger().setup_logger('Remote controller')
 
@@ -45,6 +47,7 @@ class RemoteControllerController:
         log.info('Terminated')
         sys.exit(0)
 
+    @throttle.wrap(1, 4)
     def do_process_events_from_queues(self):
 
         remote_controller_connected_already = False
@@ -82,7 +85,7 @@ class RemoteControllerController:
                         if type & 0x02:
                             axis = self.axis_map[number]
                             if axis:
-                                fvalue = round(value / 32767.0, 2)
+                                fvalue = round(value / 32767.0, 3)
                                 if self.previous_fvalue == fvalue:
                                     continue
 
@@ -94,10 +97,11 @@ class RemoteControllerController:
                     states.update(self.axis_states)
 
                     # log.debug(states)
-                    # TODO: we need to throttle the information in the queue, we fill faster than the servos
-                    #  can move when using axis: https://pypi.org/project/throttle/
 
                     self._motion_queue.put(states)
+
+                except queue.Full as e:
+                    pass
 
                 except Exception as e:
                     log.error('Unknown problem while processing the queue of the remote controller controller', e)
