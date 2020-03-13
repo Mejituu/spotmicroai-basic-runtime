@@ -3,12 +3,12 @@ import sys
 import time
 import queue
 
-from spotmicro.utilities.log import Logger
-from spotmicro.lcd_screen_controller import LCD_16x2_I2C_driver
-from spotmicro.utilities.config import Config
-from spotmicro.utilities.system import System
+from spotmicroai.utilities.log import Logger
+from spotmicroai.lcd_screen_controller import LCD_16x2_I2C_driver
+from spotmicroai.utilities.config import Config
+from spotmicroai.utilities.system import System
 
-import spotmicro.utilities.queues as queues
+import spotmicroai.utilities.queues as queues
 
 log = Logger().setup_logger('LCD Screen controller')
 

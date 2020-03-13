@@ -9,8 +9,8 @@ import time
 import os
 import sys
 
-from spotmicro.utilities.log import Logger
-from spotmicro.utilities.config import Config
+from spotmicroai.utilities.log import Logger
+from spotmicroai.utilities.config import Config
 
 log = Logger().setup_logger('CALIBRATE SERVOS')
 

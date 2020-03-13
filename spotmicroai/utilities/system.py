@@ -1,6 +1,6 @@
 import json
 import os
-from spotmicro.utilities.log import Logger
+from spotmicroai.utilities.log import Logger
 import jmespath  # http://jmespath.org/tutorial.html
 
 log = Logger().setup_logger('System')
