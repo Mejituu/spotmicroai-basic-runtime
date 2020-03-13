@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd ../..
+SCRIPT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd "$SCRIPT_DIRECTORY/../.." || exit
 
 python3 -m venv venv --clear
 source venv/bin/activate
