@@ -1,11 +1,10 @@
 #!/bin/bash
 
-cd ~
-cd spotmicroai
+cd ~/spotmicroai || exit
 
 git reset --hard HEAD
 git clean -df
-git checkout development
+git checkout master
 git pull
 
 chmod --recursive +x *.sh
