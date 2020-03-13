@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/spotmicroai
+cd ~/spotmicroai || exit
 
 python3 -m venv venv --clear
 source venv/bin/activate
