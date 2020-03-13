@@ -1,10 +1,10 @@
-#!/home/pi/spotmicro/venv/bin/python3 -u
+#!/home/pi/spotmicroai/venv/bin/python3 -u
 
 import RPi.GPIO as GPIO
 import time
 
-from spotmicro.utilities.log import Logger
-from spotmicro.utilities.config import Config
+from spotmicroai.utilities.log import Logger
+from spotmicroai.utilities.config import Config
 
 log = Logger().setup_logger('Test Abort')
 

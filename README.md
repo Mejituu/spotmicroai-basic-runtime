@@ -18,4 +18,6 @@ Visit the project website for more
 * Some videos: https://www.youtube.com/watch?v=kHBcVlqpvZ8&list=PLp5v7U2tXHs3BYfe93GZwuUZLGsisapic&
 
 
+###### TODO
+On boot, if someone press a button before press start, show the error properly in the log and screen of spotmicro
 

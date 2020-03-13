@@ -2,14 +2,14 @@
 
 import sys
 
-from spotmicro.utilities.log import Logger
+from spotmicroai.utilities.log import Logger
 
 import multiprocessing
 
-from spotmicro.motion_controller.motion_controller import MotionController
-from spotmicro.abort_controller.abort_controller import AbortController
-from spotmicro.lcd_screen_controller.lcd_screen_controller import LCDScreenController
-from spotmicro.remote_controller.remote_controller import RemoteControllerController
+from spotmicroai.motion_controller.motion_controller import MotionController
+from spotmicroai.abort_controller.abort_controller import AbortController
+from spotmicroai.lcd_screen_controller.lcd_screen_controller import LCDScreenController
+from spotmicroai.remote_controller.remote_controller import RemoteControllerController
 
 log = Logger().setup_logger()
 
