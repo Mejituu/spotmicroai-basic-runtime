@@ -86,8 +86,8 @@ class RemoteControllerController:
                                 i += 1
                                 fvalue = round(value / 32767.0, 3)
 
-                                if self.previous_fvalue == fvalue:
-                                    continue
+                                #if self.previous_fvalue == fvalue:
+                                #    continue
 
                                 self.axis_states[axis] = fvalue
                                 self.previous_fvalue = fvalue

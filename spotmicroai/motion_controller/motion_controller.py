@@ -202,8 +202,11 @@ class MotionController:
                 if event['hat0x']:
                     self.body_move_body_left_right(event['hat0x'])
 
-                if event['ly']:
+                if event['y']:
                     self.walk_forward()
+
+                if event['ly']:
+                    pass
 
                 if event['lx']:
                     pass
@@ -582,27 +585,6 @@ class MotionController:
         else:
             self.rest_position()
 
-    def walk_forward(self):
-
-        self.rest_position()
-        time.sleep(2)
-
-        self.servo_front_shoulder_right_rest_angle += 20
-        time.sleep(2)
-
-        self.servo_front_leg_right_rest_angle += 40
-        time.sleep(2)
-
-        self.servo_front_feet_right_rest_angle -= 20
-        time.sleep(2)
-
-        self.servo_front_shoulder_right_rest_angle -= 20
-        time.sleep(2)
-
-        self.servo_front_leg_right_rest_angle -= 40
-        time.sleep(2)
-
-
     def body_move_body_left_right_analog(self, raw_value):
 
         delta_a = int(General().maprange((-1, 1), (30, 150), raw_value))
@@ -612,3 +594,23 @@ class MotionController:
         self.servo_rear_shoulder_right_rest_angle = delta_a
         self.servo_front_shoulder_left_rest_angle = delta_b
         self.servo_front_shoulder_right_rest_angle = delta_b
+
+    def walk_forward(self):
+
+        # self.rest_position()
+        # time.sleep(1)
+
+        self.servo_front_shoulder_right_rest_angle += 20
+        time.sleep(1)
+
+        self.servo_front_leg_right_rest_angle += 40
+        time.sleep(1)
+
+        self.servo_front_feet_right_rest_angle -= 20
+        time.sleep(1)
+
+        self.servo_front_shoulder_right_rest_angle -= 20
+        time.sleep(1)
+
+        self.servo_front_leg_right_rest_angle -= 40
+        time.sleep(1)
