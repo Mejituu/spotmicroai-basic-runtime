@@ -230,9 +230,17 @@ class MotionController:
                 if event['x']:
                     self.body_move_position_left()
 
-                if event['t1'+'lx']:
-                    self.arm_set_position(event['lx'])
+                if event['tl']:
+                    self.arm_set_rotation(event['lx'])
 
+                if event['tl']:
+                    self.arm_set_lift(event['ly'])
+
+                if event['tr']:
+                    self.arm_set_range(event['ly'])
+
+                if event['tr']:
+                    self.arm_set_cam_tilt(event['ry'])
 
                 self._previous_event = event
 
@@ -588,12 +596,33 @@ class MotionController:
         self.servo_front_leg_right.angle = self.servo_front_leg_right_rest_angle + variation_leg - 5
         self.servo_front_feet_right.angle = self.servo_front_feet_right_rest_angle - variation_feet + 5
 
-    def arm_set_position(self, raw_value):
+    def arm_set_rotation(self, raw_value):
 
-        left_position = int(self.maprange((-1, 1), (0, 180), raw_value))
+        left_position = int(self.maprange((-1, 1), (0, 180), raw_value/2))
 
         if int(self.servo_arm_rotation.angle) != int(left_position):
             self.servo_arm_rotation.angle = left_position
+
+    def arm_set_lift(self, raw_value):
+
+        lift_position = int(self.maprange((-1, 1), (180, 0), raw_value/2))
+
+        if int(self.servo_arm_lift.angle) != int(lift_position):
+            self.servo_arm_lift.angle = lift_position
+
+    def arm_set_range(self, raw_value):
+
+        range_position = int(self.maprange((-1, 1), (180, 0), raw_value/2))
+
+        if int(self.servo_arm_range.angle) != int(range_position):
+            self.servo_arm_range.angle = range_position
+
+    def arm_set_cam_tilt(self, raw_value):
+
+        tilt_position = int(self.maprange((-1, 1), (100, 150), raw_value))
+
+        if int(self.servo_arm_cam_tilt.angle) != int(tilt_position):
+            self.servo_arm_cam_tilt.angel = tilt_position
 
     def maprange(self, a, b, s):
         (a1, a2), (b1, b2) = a, b
