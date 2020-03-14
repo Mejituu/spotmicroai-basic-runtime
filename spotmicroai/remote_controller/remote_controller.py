@@ -64,6 +64,7 @@ class RemoteControllerController:
                 continue
 
             # Main event loop
+            i = 0
             while True:
 
                 try:
@@ -82,20 +83,26 @@ class RemoteControllerController:
                         if type & 0x02:
                             axis = self.axis_map[number]
                             if axis:
-                                fvalue = round(value / 32767.0, 2)
-                                if self.previous_fvalue == fvalue:
-                                    continue
+                                i += 1
+                                fvalue = round(value / 32767.0, 3)
+
+                                #if self.previous_fvalue == fvalue:
+                                #    continue
 
                                 self.axis_states[axis] = fvalue
                                 self.previous_fvalue = fvalue
+
+                                if axis in ['lx', 'ly', 'lz', 'rx', 'ry', 'rz']:
+                                    if i >= 6:
+                                        i = 0
+                                    else:
+                                        continue
 
                     states = {}
                     states.update(self.button_states)
                     states.update(self.axis_states)
 
                     # log.debug(states)
-                    # TODO: we need to throttle the information in the queue, we fill faster than the servos
-                    #  can move when using axis: https://pypi.org/project/throttle/
 
                     self._motion_queue.put(states)
 
