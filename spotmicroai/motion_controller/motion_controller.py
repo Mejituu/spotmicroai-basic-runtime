@@ -399,25 +399,25 @@ class MotionController:
         self.servo_arm_rotation_channel = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_ROTATION_CHANNEL)
         self.servo_arm_rotation_min_pulse = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_ROTATION_MIN_PULSE)
         self.servo_arm_rotation_max_pulse = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_ROTATION_MAX_PULSE)
-        self.servo_arm_rotation_rest_angle = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_ROTATION_REST_ANGLE)
+        self.servo_arm_rotation_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_ROTATION_REST_ANGLE)
 
         self.servo_arm_lift_pca9685 = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_LIFT_PCA9685)
         self.servo_arm_lift_channel = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_LIFT_CHANNEL)
         self.servo_arm_lift_min_pulse = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_LIFT_MIN_PULSE)
         self.servo_arm_lift_max_pulse = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_LIFT_MAX_PULSE)
-        self.servo_arm_lift_rest_angle = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_LIFT_REST_ANGLE)
+        self.servo_arm_lift_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_LIFT_REST_ANGLE)
 
         self.servo_arm_range_pca9685 = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_RANGE_PCA9685)
         self.servo_arm_range_channel = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_RANGE_CHANNEL)
         self.servo_arm_range_min_pulse = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_RANGE_MIN_PULSE)
         self.servo_arm_range_max_pulse = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_RANGE_MAX_PULSE)
-        self.servo_arm_range_rest_angle = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_RANGE_REST_ANGLE)
+        self.servo_arm_range_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_RANGE_REST_ANGLE)
 
         self.servo_arm_cam_tilt_pca9685 = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_PCA9685)
         self.servo_arm_cam_tilt_channel = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_CHANNEL)
         self.servo_arm_cam_tilt_min_pulse = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_MIN_PULSE)
         self.servo_arm_cam_tilt_max_pulse = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_MAX_PULSE)
-        self.servo_arm_cam_tilt_rest_angle = Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_REST_ANGLE)
+        self.servo_arm_cam_tilt_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_CAM_TILT_REST_ANGLE)
 
     def activate_servos(self):
 
@@ -581,6 +581,26 @@ class MotionController:
         except ValueError as e:
             log.error('Impossible servo_front_feet_right angle requested')
 
+        try:
+            self.servo_arm_rotation.angle = self.servo_arm_rotation_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_arm_rotation angle requested')
+
+        try:
+            self.servo_arm_lift.angle = self.servo_arm_lift_rest_angle
+        except ValueError as e:
+            log.error('Impossible arm_lift angle requested')
+
+        try:
+            self.servo_arm_range.angle = self.servo_arm_range_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_arm_range angle requested')
+
+        try:
+            self.servo_arm_cam_tilt.angle = self.servo_arm_cam_tilt_rest_angle
+        except ValueError as e:
+            log.error('Impossible servo_arm_cam_tilt angle requested')
+
     def rest_position(self):
 
         self.servo_rear_shoulder_left_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_REST_ANGLE)
@@ -596,10 +616,10 @@ class MotionController:
         self.servo_front_leg_right_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_REST_ANGLE)
         self.servo_front_feet_right_rest_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_REST_ANGLE)
 
-        self.servo_arm_rotation.angle = self.servo_arm_rotation_rest_angle
-        self.servo_arm_lift.angle = self.servo_arm_lift_rest_angle
-        self.servo_arm_range.angle = self.servo_arm_range_rest_angle
-        self.servo_arm_cam_tilt.angle = self.servo_arm_cam_tilt_rest_angle
+        self.servo_arm_rotation.angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_ROTATION_REST_ANGLE)
+        self.servo_arm_lift.angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_LIFT_REST_ANGLE)
+        self.servo_arm_range.angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_RANGE_REST_ANGLE)
+        self.servo_arm_cam_tilt.angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_CAM_TILT_REST_ANGLE)
 
     def body_move_body_up_and_down(self, raw_value):
 
