@@ -1,4 +1,4 @@
-#!/home/pi/spotmicro/venv/bin/python3 -u
+#!/home/pi/spotmicroai/venv/bin/python3 -u
 
 # Released by rdb under the Unlicense (unlicense.org)
 # Based on information from:
@@ -7,8 +7,8 @@
 import os, struct, array
 from fcntl import ioctl
 
-from spotmicro.utilities.log import Logger
-from spotmicro.utilities.config import Config
+from spotmicroai.utilities.log import Logger
+from spotmicroai.utilities.config import Config
 
 log = Logger().setup_logger('Testing remote controller')
 

@@ -1,10 +1,10 @@
 [Unit]
-Description=SpotMicro
+Description=SpotMicroAI
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=/home/pi/spotmicroai/run_spotmicroai.sh
+ExecStart=/home/pi/spotmicroai/run.sh
 WorkingDirectory=/home/pi/spotmicroai
 StandardOutput=inherit
 StandardError=inherit

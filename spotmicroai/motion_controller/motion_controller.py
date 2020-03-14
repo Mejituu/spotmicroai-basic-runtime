@@ -9,9 +9,9 @@ from adafruit_pca9685 import PCA9685
 from adafruit_motor import servo
 import time
 
-from spotmicro.utilities.log import Logger
-from spotmicro.utilities.config import Config
-import spotmicro.utilities.queues as queues
+from spotmicroai.utilities.log import Logger
+from spotmicroai.utilities.config import Config
+import spotmicroai.utilities.queues as queues
 
 log = Logger().setup_logger('Motion controller')
 

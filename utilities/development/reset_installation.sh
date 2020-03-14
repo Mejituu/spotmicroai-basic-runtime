@@ -1,13 +1,12 @@
 #!/bin/bash
 
-cd ~
-cd spotmicroai
+cd ~/spotmicroai || exit
 
 git reset --hard HEAD
 git clean -df
-git checkout development
+git checkout master
 git pull
 
 find . -type f -iname "*.sh" -exec chmod +x {} \;
 
-~/spotmicroai/install/activate.sh
+~/spotmicroai/utillities/activate.sh

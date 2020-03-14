@@ -2,6 +2,16 @@
 	"abort_controller": [{
 		"gpio_port": 17
 	}],
+	"lcd_screen_controller": [{
+		"lcd_screen": [{
+			"address": "0x27"
+		}]
+	}],
+	"remote_controller_controller": [{
+		"remote_controller": [{
+			"device": "js0"
+		}]
+	}],
 	"motion_controller": [{
 		"boards": [{
 			"pca9685_1": [{
@@ -128,16 +138,6 @@
 				"max_pulse": 2500,
 				"rest_angle": 90
 			}]
-		}]
-	}],
-	"lcd_screen_controller": [{
-		"lcd_screen": [{
-			"address": "0x27"
-		}]
-	}],
-	"remote_controller_controller": [{
-		"remote_controller": [{
-			"device": "js0"
 		}]
 	}]
 }

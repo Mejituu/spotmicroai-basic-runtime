@@ -1,8 +1,8 @@
 #!/home/pi/spotmicroai/venv/bin/python3 -u
 
-from spotmicro.lcd_screen_controller import LCD_16x2_I2C_driver
-from spotmicro.utilities.log import Logger
-from spotmicro.utilities.config import Config
+from spotmicroai.lcd_screen_controller import LCD_16x2_I2C_driver
+from spotmicroai.utilities.log import Logger
+from spotmicroai.utilities.config import Config
 import time
 
 log = Logger().setup_logger('Test LCD Screen')

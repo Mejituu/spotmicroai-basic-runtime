@@ -1,9 +1,9 @@
 import signal
 import RPi.GPIO as GPIO
 import sys
-from spotmicro.utilities.log import Logger
-from spotmicro.utilities.config import Config
-import spotmicro.utilities.queues as queues
+from spotmicroai.utilities.log import Logger
+from spotmicroai.utilities.config import Config
+import spotmicroai.utilities.queues as queues
 
 log = Logger().setup_logger('Abort controller')
 
