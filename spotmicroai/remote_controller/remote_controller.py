@@ -73,7 +73,7 @@ class RemoteControllerController:
                         buftime, value, type, number = struct.unpack('IhBB', evbuf)
 
                         if type & 0x80:
-                            pass
+                            continue
 
                         if type & 0x01:
                             button = self.button_map[number]
@@ -86,11 +86,11 @@ class RemoteControllerController:
                                 i += 1
                                 fvalue = round(value / 32767.0, 3)
 
+                                if self.previous_fvalue == fvalue:
+                                    continue
+
                                 self.axis_states[axis] = fvalue
                                 self.previous_fvalue = fvalue
-
-                                # if self.previous_fvalue == fvalue:
-                                #    continue
 
                                 if axis in ['lx', 'ly', 'lz', 'rx', 'ry', 'rz']:
                                     if i >= 6:
