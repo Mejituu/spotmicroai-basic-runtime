@@ -527,32 +527,36 @@ class MotionController:
         else:
             self.rest_position()
 
+        print(str(self.servo_rear_leg_left_rest_angle) + ', ' + str(self.servo_rear_feet_left_rest_angle) + ', ' + str(self.servo_rear_leg_right_rest_angle) + ', ' + str(self.servo_rear_feet_right_rest_angle) + ', ' + str(self.servo_front_leg_left_rest_angle) + ', ' + str(self.servo_front_feet_left_rest_angle) + ', ' + str(self.servo_front_leg_right_rest_angle) + ', ' + str(self.servo_front_feet_right_rest_angle))
+
     def body_move_body_up_and_down_analog(self, raw_value):
 
-        delta = int(self.maprange((-1, 1), (0, 5), raw_value))
+        servo_rear_leg_left_max_angle = 38
+        servo_rear_feet_left_max_angle = 70
+        servo_rear_leg_right_max_angle = 126
+        servo_rear_feet_right_max_angle = 102
+        servo_front_leg_left_max_angle = 57
+        servo_front_feet_left_max_angle = 85
+        servo_front_leg_right_max_angle = 130
+        servo_front_feet_right_max_angle = 120
 
-        if raw_value < 0:
-            self.servo_rear_leg_left_rest_angle -= 1
-            self.servo_rear_feet_left_rest_angle += 1.5
-            self.servo_rear_leg_right_rest_angle += 1
-            self.servo_rear_feet_right_rest_angle -= 1.5
-            self.servo_front_leg_left_rest_angle -= 1
-            self.servo_front_feet_left_rest_angle += 1.5
-            self.servo_front_leg_right_rest_angle += 1
-            self.servo_front_feet_right_rest_angle -= 1.5
+        delta_rear_leg_left = int(self.maprange((1, -1), (Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_REST_ANGLE), servo_rear_leg_left_max_angle), raw_value))
+        delta_rear_feet_left = int(self.maprange((1, -1), (Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_REST_ANGLE), servo_rear_feet_left_max_angle), raw_value))
+        delta_rear_leg_right = int(self.maprange((1, -1), (Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_LEG_RIGHT_REST_ANGLE), servo_rear_leg_right_max_angle), raw_value))
+        delta_rear_feet_right = int(self.maprange((1, -1), (Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_FEET_RIGHT_REST_ANGLE), servo_rear_feet_right_max_angle), raw_value))
+        delta_front_leg_left = int(self.maprange((1, -1), (Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_LEG_LEFT_REST_ANGLE), servo_front_leg_left_max_angle), raw_value))
+        delta_front_feet_left = int(self.maprange((1, -1), (Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_FEET_LEFT_REST_ANGLE), servo_front_feet_left_max_angle), raw_value))
+        delta_front_leg_right = int(self.maprange((1, -1), (Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_LEG_RIGHT_REST_ANGLE), servo_front_leg_right_max_angle), raw_value))
+        delta_front_feet_right = int(self.maprange((1, -1), (Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_REST_ANGLE), servo_front_feet_right_max_angle), raw_value))
 
-        elif raw_value > 0:
-            self.servo_rear_leg_left_rest_angle += 1
-            self.servo_rear_feet_left_rest_angle -= 1.5
-            self.servo_rear_leg_right_rest_angle -= 1
-            self.servo_rear_feet_right_rest_angle += 1.5
-            self.servo_front_leg_left_rest_angle += 1
-            self.servo_front_feet_left_rest_angle -= 1.5
-            self.servo_front_leg_right_rest_angle -= 1
-            self.servo_front_feet_right_rest_angle += 1.5
-
-        else:
-            self.rest_position()
+        self.servo_rear_leg_left_rest_angle = delta_rear_leg_left
+        self.servo_rear_feet_left_rest_angle = delta_rear_feet_left
+        self.servo_rear_leg_right_rest_angle = delta_rear_leg_right
+        self.servo_rear_feet_right_rest_angle = delta_rear_feet_right
+        self.servo_front_leg_left_rest_angle = delta_front_leg_left
+        self.servo_front_feet_left_rest_angle = delta_front_feet_left
+        self.servo_front_leg_right_rest_angle = delta_front_leg_right
+        self.servo_front_feet_right_rest_angle = delta_front_feet_right
 
     def body_move_body_left_right(self, raw_value):
 
@@ -575,22 +579,13 @@ class MotionController:
 
     def body_move_body_left_right_analog(self, raw_value):
 
-        delta = int(self.maprange((-1, 1), (0, 2), raw_value))
+        delta_a = int(self.maprange((-1, 1), (30, 150), raw_value))
+        delta_b = int(self.maprange((-1, 1), (150, 30), raw_value))
 
-        if raw_value < 0:
-            self.servo_rear_shoulder_left_rest_angle -= 1
-            self.servo_rear_shoulder_right_rest_angle -= 1
-            self.servo_front_shoulder_left_rest_angle += 1
-            self.servo_front_shoulder_right_rest_angle += 1
-
-        elif raw_value > 0:
-            self.servo_rear_shoulder_left_rest_angle += 1
-            self.servo_rear_shoulder_right_rest_angle += 1
-            self.servo_front_shoulder_left_rest_angle -= 1
-            self.servo_front_shoulder_right_rest_angle -= 1
-
-        else:
-            self.rest_position()
+        self.servo_rear_shoulder_left_rest_angle = delta_a
+        self.servo_rear_shoulder_right_rest_angle = delta_a
+        self.servo_front_shoulder_left_rest_angle = delta_b
+        self.servo_front_shoulder_right_rest_angle = delta_b
 
     def body_move_body_front_rear_up_down(self, raw_value):
 

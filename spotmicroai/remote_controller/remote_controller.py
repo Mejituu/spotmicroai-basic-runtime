@@ -8,8 +8,6 @@ import sys
 from spotmicroai.utilities.log import Logger
 from spotmicroai.utilities.config import Config
 import spotmicroai.utilities.queues as queues
-import queue
-import throttle
 
 log = Logger().setup_logger('Remote controller')
 
@@ -47,7 +45,6 @@ class RemoteControllerController:
         log.info('Terminated')
         sys.exit(0)
 
-    @throttle.wrap(1, 4)
     def do_process_events_from_queues(self):
 
         remote_controller_connected_already = False
@@ -67,6 +64,7 @@ class RemoteControllerController:
                 continue
 
             # Main event loop
+            i = 0
             while True:
 
                 try:
@@ -75,7 +73,7 @@ class RemoteControllerController:
                         buftime, value, type, number = struct.unpack('IhBB', evbuf)
 
                         if type & 0x80:
-                            continue
+                            pass
 
                         if type & 0x01:
                             button = self.button_map[number]
@@ -85,12 +83,20 @@ class RemoteControllerController:
                         if type & 0x02:
                             axis = self.axis_map[number]
                             if axis:
+                                i += 1
                                 fvalue = round(value / 32767.0, 3)
-                                if self.previous_fvalue == fvalue:
-                                    continue
 
                                 self.axis_states[axis] = fvalue
                                 self.previous_fvalue = fvalue
+
+                                # if self.previous_fvalue == fvalue:
+                                #    continue
+
+                                if axis in ['lx', 'ly', 'lz', 'rx', 'ry', 'rz']:
+                                    if i >= 6:
+                                        i = 0
+                                    else:
+                                        continue
 
                     states = {}
                     states.update(self.button_states)
@@ -99,9 +105,6 @@ class RemoteControllerController:
                     # log.debug(states)
 
                     self._motion_queue.put(states)
-
-                except queue.Full as e:
-                    pass
 
                 except Exception as e:
                     log.error('Unknown problem while processing the queue of the remote controller controller', e)
