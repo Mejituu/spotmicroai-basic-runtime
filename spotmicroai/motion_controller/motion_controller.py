@@ -2,7 +2,6 @@ import signal
 import sys
 
 import queue
-import os
 import busio
 from board import SCL, SDA
 from adafruit_pca9685 import PCA9685
