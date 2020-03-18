@@ -109,6 +109,34 @@
 				"min_pulse": 500,
 				"max_pulse": 2500,
 				"rest_angle": 90
+			}],
+			"arm_rotation": [{
+			    "pca9685": 1,
+				"channel": 6,
+				"min_pulse": 500,
+				"max_pulse": 2500,
+				"rest_angle": 90
+			}],
+			"arm_lift": [{
+			    "pca9685": 1,
+				"channel": 7,
+				"min_pulse": 500,
+				"max_pulse": 2500,
+				"rest_angle": 90
+			}],
+			"arm_range": [{
+			    "pca9685": 1,
+				"channel": 8,
+				"min_pulse": 500,
+				"max_pulse": 2500,
+				"rest_angle": 90
+			}],
+			"arm_cam_tilt": [{
+			    "pca9685": 1,
+				"channel": 9,
+				"min_pulse": 500,
+				"max_pulse": 2500,
+				"rest_angle": 90
 			}]
 		}]
 	}]

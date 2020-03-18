@@ -13,6 +13,7 @@ from spotmicroai.remote_controller.remote_controller import RemoteControllerCont
 
 log = Logger().setup_logger()
 
+# Optional ALL OF THEM ARE OPTIONAL, only the ones present in the configuration file (or if present marked as enabled) are activated
 
 def process_abort_controller(communication_queues):
     abort = AbortController(communication_queues)
@@ -29,7 +30,6 @@ def process_remote_controller_controller(communication_queues):
     remote_controller.do_process_events_from_queues()
 
 
-# Optional
 def process_output_lcd_screen_controller(communication_queues):
     lcd_screen = LCDScreenController(communication_queues)
     lcd_screen.do_process_events_from_queue()
