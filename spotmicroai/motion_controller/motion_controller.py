@@ -4,14 +4,10 @@ import sys
 import queue
 import busio
 from board import SCL, SDA
-from adafruit_pca9685 import PCA9685
-from adafruit_motor import servo
 import time
 
 from spotmicroai.utilities.log import Logger
-from spotmicroai.utilities.config import Config
 import spotmicroai.utilities.queues as queues
-from spotmicroai.utilities.general import General
 
 from spotmicroai.motion_controller.motion_controller_setup import MotionControllerSetup
 from spotmicroai.motion_controller.arm_moves import MotionControllerArmMoves
