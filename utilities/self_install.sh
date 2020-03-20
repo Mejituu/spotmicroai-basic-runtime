@@ -18,4 +18,4 @@ git checkout ba031e5fad88fbcd751b23df0d87d6e76496068c
 
 find . -type f -iname "*.sh" -exec chmod +x {} \;
 
-~/spotmicroai/utillities/activate.sh
+~/spotmicroai/utilities/activate.sh
