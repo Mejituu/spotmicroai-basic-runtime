@@ -46,7 +46,8 @@ while True:
         14: 'arm_range            - CHANNEL[' + str(Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_RANGE_CHANNEL)) + '] - ANGLE[' + str(Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_RANGE_REST_ANGLE)) + ']',
         15: 'arm_cam_tilt         - CHANNEL[' + str(Config().get(Config.ARM_CONTROLLER_SERVOS_ARM_CAM_TILT_CHANNEL)) + '] - ANGLE[' + str(Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_CAM_TILT_REST_ANGLE)) + ']'}
 
-    title = '1. Use "i2cdetect -y 1" to identify your i2c address' + os.linesep + \
+    title = 'The folder integration_tests for more tests' + os.linesep + \
+            '1. Use "i2cdetect -y 1" to identify your i2c address' + os.linesep + \
             '2. Write your pca9685 i2c address(es) and settings in your configuration file ~/spotmicroai.json' + os.linesep + \
             '3. if no angle is specified 90 will be the default position, for example if you just press Enter' + os.linesep + \
             '' + os.linesep + \

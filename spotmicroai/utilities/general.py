@@ -1,4 +1,3 @@
-import os
 from spotmicroai.utilities.log import Logger
 
 log = Logger().setup_logger('System')

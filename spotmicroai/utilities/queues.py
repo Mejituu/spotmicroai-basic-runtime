@@ -1,10 +1,3 @@
-import json
-import sys
-import os
-from spotmicroai.utilities.log import Logger
-import jmespath  # http://jmespath.org/tutorial.html
-import shutil
-from pathlib import Path
 
 ABORT_CONTROLLER = 'abort_controller'
 LCD_SCREEN_CONTROLLER = 'lcd_screen_controller'
