@@ -788,12 +788,18 @@ class MotionController:
 
     def arm_set_rotation(self, raw_value):
 
+        if not self.servo_arm_rotation_pca9685:
+            return
+
         left_position = int(General().maprange((-1, 1), (0, 180), raw_value / 2))
 
         if int(self.servo_arm_rotation.angle) != int(left_position):
             self.servo_arm_rotation.angle = left_position
 
     def arm_set_lift(self, raw_value):
+
+        if not self.servo_arm_rotation_pca9685:
+            return
 
         lift_position = int(General().maprange((-1, 1), (180, 0), raw_value / 2))
 
@@ -802,12 +808,18 @@ class MotionController:
 
     def arm_set_range(self, raw_value):
 
+        if not self.servo_arm_rotation_pca9685:
+            return
+
         range_position = int(General().maprange((-1, 1), (180, 0), raw_value / 2))
 
         if int(self.servo_arm_range.angle) != int(range_position):
             self.servo_arm_range.angle = range_position
 
     def arm_set_cam_tilt(self, raw_value):
+
+        if not self.servo_arm_rotation_pca9685:
+            return
 
         tilt_position = int(General().maprange((-1, 1), (100, 150), raw_value))
 
