@@ -23,7 +23,7 @@ class AbortController:
             self.gpio_port = Config().get(Config.ABORT_CONTROLLER_GPIO_PORT)
 
             GPIO.setmode(GPIO.BCM)
-            GPIO.setup(self.gpio_port, GPIO.OUT, initial=GPIO.HIGH)
+            GPIO.setup(self.gpio_port, GPIO.OUT)
 
             self._abort_queue = communication_queues[queues.ABORT_CONTROLLER]
             self._lcd_screen_queue = communication_queues[queues.LCD_SCREEN_CONTROLLER]
@@ -43,7 +43,6 @@ class AbortController:
     def exit_gracefully(self, signum, frame):
         try:
             self.abort()
-            GPIO.setup(self.gpio_port, GPIO.IN)
         finally:
             log.info('Terminated')
             sys.exit(0)
