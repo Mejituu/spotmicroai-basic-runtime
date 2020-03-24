@@ -52,12 +52,18 @@ class MotionControllerArmMoves(metaclass=Singleton):
 
     def rest_position(self):
 
+        if not MotionControllerSetup().arm_is_enabled:
+            return
+
         MotionControllerSetup().servo_arm_rotation.angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_ROTATION_REST_ANGLE)
         MotionControllerSetup().servo_arm_lift.angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_LIFT_REST_ANGLE)
         MotionControllerSetup().servo_arm_range.angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_RANGE_REST_ANGLE)
         MotionControllerSetup().servo_arm_cam_tilt.angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_ARM_CAM_TILT_REST_ANGLE)
 
     def arm_set_rotation(self, raw_value):
+
+        if not MotionControllerSetup().arm_is_enabled:
+            return
 
         left_position = int(General().maprange((-1, 1), (0, 180), raw_value / 2))
 
@@ -66,6 +72,9 @@ class MotionControllerArmMoves(metaclass=Singleton):
 
     def arm_set_lift(self, raw_value):
 
+        if not MotionControllerSetup().arm_is_enabled:
+            return
+
         lift_position = int(General().maprange((-1, 1), (180, 0), raw_value / 2))
 
         if int(MotionControllerSetup().servo_arm_lift.angle) != int(lift_position):
@@ -73,12 +82,18 @@ class MotionControllerArmMoves(metaclass=Singleton):
 
     def arm_set_range(self, raw_value):
 
+        if not MotionControllerSetup().arm_is_enabled:
+            return
+
         range_position = int(General().maprange((-1, 1), (180, 0), raw_value / 2))
 
         if int(MotionControllerSetup().servo_arm_range.angle) != int(range_position):
             MotionControllerSetup().servo_arm_range.angle = range_position
 
     def arm_set_cam_tilt(self, raw_value):
+
+        if not MotionControllerSetup().arm_is_enabled:
+            return
 
         tilt_position = int(General().maprange((-1, 1), (100, 150), raw_value))
 

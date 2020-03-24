@@ -102,6 +102,9 @@ class MotionControllerLegsMoves(metaclass=Singleton):
 
     def rest_position(self):
 
+        if not MotionControllerSetup().legs_are_enabled:
+            return
+
         MotionControllerSetup().servo_rear_shoulder_left_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_REST_ANGLE)
         MotionControllerSetup().servo_rear_leg_left_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_LEG_LEFT_REST_ANGLE)
         MotionControllerSetup().servo_rear_feet_left_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_REAR_FEET_LEFT_REST_ANGLE)
@@ -116,6 +119,9 @@ class MotionControllerLegsMoves(metaclass=Singleton):
         MotionControllerSetup().servo_front_feet_right_angle = Config().get(Config.MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_REST_ANGLE)
 
     def body_move_body_up_and_down(self, raw_value):
+
+        if not MotionControllerSetup().legs_are_enabled:
+            return
 
         range = 10
         range2 = 15
@@ -144,6 +150,9 @@ class MotionControllerLegsMoves(metaclass=Singleton):
             self.rest_position()
 
     def body_move_body_up_and_down_analog(self, raw_value):
+
+        if not MotionControllerSetup().legs_are_enabled:
+            return
 
         servo_rear_leg_left_max_angle = 38
         servo_rear_feet_left_max_angle = 70
@@ -174,6 +183,9 @@ class MotionControllerLegsMoves(metaclass=Singleton):
 
     def body_move_body_left_right(self, raw_value):
 
+        if not MotionControllerSetup().legs_are_enabled:
+            return
+
         range = 5
 
         if raw_value < 0:
@@ -193,6 +205,9 @@ class MotionControllerLegsMoves(metaclass=Singleton):
 
     def body_move_body_left_right_analog(self, raw_value):
 
+        if not MotionControllerSetup().legs_are_enabled:
+            return
+
         delta_a = int(General().maprange((-1, 1), (30, 150), raw_value))
         delta_b = int(General().maprange((-1, 1), (150, 30), raw_value))
 
@@ -202,6 +217,9 @@ class MotionControllerLegsMoves(metaclass=Singleton):
         self.servo_front_shoulder_right_angle = delta_b
 
     def standing_position(self):
+
+        if not MotionControllerSetup().legs_are_enabled:
+            return
 
         variation_leg = 50
         variation_feet = 70
@@ -225,6 +243,9 @@ class MotionControllerLegsMoves(metaclass=Singleton):
         MotionControllerSetup().servo_front_feet_right.angle = self.servo_front_feet_right_angle - variation_feet + 5
 
     def body_move_position_right(self):
+
+        if not MotionControllerSetup().legs_are_enabled:
+            return
 
         move = 20
 
@@ -250,6 +271,9 @@ class MotionControllerLegsMoves(metaclass=Singleton):
         MotionControllerSetup().servo_front_feet_right.angle = self.servo_front_feet_right_angle - variation_feet + 5
 
     def body_move_position_left(self):
+
+        if not MotionControllerSetup().legs_are_enabled:
+            return
 
         move = 20
 
