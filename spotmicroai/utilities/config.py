@@ -161,7 +161,7 @@ class Config(metaclass=Singleton):
             sys.exit(1)
 
     def list_modules(self):
-        log.info('Detected configuration for the modules: ' + ', '.join(self.values.keys()))
+        log.debug('Detected configuration for the modules: ' + ', '.join(self.values.keys()))
 
     def save_config(self):
         try:

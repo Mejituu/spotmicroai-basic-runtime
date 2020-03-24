@@ -147,4 +147,4 @@ class MotionController:
 
             except Exception as e:
                 log.error('Unknown problem while processing the queue of the motion controller')
-                log.error(' - Most likely a servo is not able to get to the assigned position')
+                log.error(' - Most likely a servo is not able to get to the assigned position', e)
