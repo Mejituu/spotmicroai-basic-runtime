@@ -23,12 +23,17 @@ class Config(metaclass=Singleton):
     LCD_SCREEN_CONTROLLER_I2C_ADDRESS = 'lcd_screen_controller[0].lcd_screen[0].address'
     REMOTE_CONTROLLER_CONTROLLER_DEVICE = 'remote_controller_controller[0].remote_controller[0].device'
 
+    MOTION_CONTROLLER_BOARDS_PCA9685_1_ENABLED = 'motion_controller[*].boards[*].pca9685_1[*].enabled | [0] | [0] | [0]'
     MOTION_CONTROLLER_BOARDS_PCA9685_1_ADDRESS = 'motion_controller[*].boards[*].pca9685_1[*].address | [0] | [0] | [0]'
     MOTION_CONTROLLER_BOARDS_PCA9685_1_REFERENCE_CLOCK_SPEED = 'motion_controller[*].boards[*].pca9685_1[*].reference_clock_speed | [0] | [0] | [0]'
     MOTION_CONTROLLER_BOARDS_PCA9685_1_FREQUENCY = 'motion_controller[*].boards[*].pca9685_1[*].frequency | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_BOARDS_PCA9685_2_ENABLED = 'motion_controller[*].boards[*].pca9685_2[*].enabled | [0] | [0] | [0]'
     MOTION_CONTROLLER_BOARDS_PCA9685_2_ADDRESS = 'motion_controller[*].boards[*].pca9685_2[*].address | [0] | [0] | [0]'
     MOTION_CONTROLLER_BOARDS_PCA9685_2_REFERENCE_CLOCK_SPEED = 'motion_controller[*].boards[*].pca9685_2[*].reference_clock_speed | [0] | [0] | [0]'
     MOTION_CONTROLLER_BOARDS_PCA9685_2_FREQUENCY = 'motion_controller[*].boards[*].pca9685_2[*].frequency | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_LEGS_ENABLED = 'motion_controller[*].legs_enabled | [0] | [0] | [0]'
 
     MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_PCA9685 = 'motion_controller[*].servos[*].rear_shoulder_left[*].pca9685 | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_REAR_SHOULDER_LEFT_CHANNEL = 'motion_controller[*].servos[*].rear_shoulder_left[*].channel | [0] | [0] | [0]'
@@ -101,6 +106,8 @@ class Config(metaclass=Singleton):
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_MIN_PULSE = 'motion_controller[*].servos[*].front_feet_right[*].min_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_MAX_PULSE = 'motion_controller[*].servos[*].front_feet_right[*].max_pulse | [0] | [0] | [0]'
     MOTION_CONTROLLER_SERVOS_FRONT_FEET_RIGHT_REST_ANGLE = 'motion_controller[*].servos[*].front_feet_right[*].rest_angle | [0] | [0] | [0]'
+
+    MOTION_CONTROLLER_ARM_ENABLED = 'motion_controller[*].arm_enabled | [0] | [0] | [0]'
 
     ARM_CONTROLLER_SERVOS_ARM_ROTATION_PCA9685 = 'motion_controller[*].servos[*].arm_rotation[*].pca9685 | [0] | [0] | [0]'
     ARM_CONTROLLER_SERVOS_ARM_ROTATION_CHANNEL = 'motion_controller[*].servos[*].arm_rotation[*].channel | [0] | [0] | [0]'

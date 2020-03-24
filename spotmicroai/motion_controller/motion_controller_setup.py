@@ -45,8 +45,8 @@ class MotionControllerSetup(metaclass=Singleton):
     servo_arm_cam_tilt = None
 
     def __init__(self):
-        self.legs_are_enabled = Config().get(Config.MOTION_CONTROLLER_LEGS_ARE_ENABLED)
-        self.arm_is_enabled = Config().get(Config.MOTION_CONTROLLER_ARM_IS_ENABLED)
+        self.legs_are_enabled = Config().get(Config.MOTION_CONTROLLER_LEGS_ENABLED)
+        self.arm_is_enabled = Config().get(Config.MOTION_CONTROLLER_ARM_ENABLED)
 
     def activate_pca9685_boards(self):
 
