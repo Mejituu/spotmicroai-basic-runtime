@@ -13,17 +13,13 @@
 		}]
 	}],
 	"motion_controller": [{
-		"legs_enabled": true,
-		"arm_enabled": false,
 		"boards": [{
 			"pca9685_1": [{
-				"enabled": true,
 				"address": "0x40",
 				"reference_clock_speed": 25000000,
 				"frequency": 50
 			}],
 			"pca9685_2": [{
-				"enabled": false,
 				"address": "0x42",
 				"reference_clock_speed": 25000000,
 				"frequency": 50

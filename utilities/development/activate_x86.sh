@@ -13,6 +13,7 @@ python3 -m pip install --upgrade jmespath
 python3 -m pip install --upgrade adafruit-circuitpython-motor
 python3 -m pip install --upgrade adafruit-circuitpython-pca9685
 python3 -m pip install --upgrade inputs
+python3 -m pip install --upgrade pick
 
 #python3 -m pip install --upgrade smbus
 #python3 -m pip install --upgrade RPi.GPIO

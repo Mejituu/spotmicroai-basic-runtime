@@ -9,4 +9,4 @@ git pull
 
 find . -type f -iname "*.sh" -exec chmod +x {} \;
 
-~/spotmicroai/utillities/activate.sh
+~/spotmicroai/utilities/activate.sh
