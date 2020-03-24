@@ -54,12 +54,14 @@ class MotionController:
             self._lcd_screen_queue.put('motion_controller_2 NOK')
             try:
                 MotionControllerSetup().deactivate_pca9685_boards()
+                self.is_activated = False
             finally:
                 sys.exit(1)
 
     def exit_gracefully(self, signum, frame):
         try:
             MotionControllerSetup().deactivate_pca9685_boards()
+            self.is_activated = False
         finally:
             log.info('Terminated')
             sys.exit(0)
@@ -80,6 +82,7 @@ class MotionController:
                         MotionControllerArmMoves().rest_position()
                         time.sleep(0.5)
                         MotionControllerSetup().deactivate_pca9685_boards()
+                        self.is_activated = False
                         self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ABORT)
                     else:
                         self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ACTIVATE)
@@ -139,7 +142,7 @@ class MotionController:
 
             except queue.Empty as e:
                 log.info('Inactivity lasted 60 seconds, shutting down the servos, '
-                         'press START/OPTIONS button to reactivate')
+                         'press START/OPTIONS button to reactivate', e)
                 if self.is_activated:
                     MotionControllerLegsMoves().rest_position()
                     MotionControllerArmMoves().rest_position()
