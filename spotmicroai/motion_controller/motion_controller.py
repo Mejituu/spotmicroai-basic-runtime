@@ -84,6 +84,7 @@ class MotionController:
                     else:
                         self._abort_queue.put(queues.ABORT_CONTROLLER_ACTION_ACTIVATE)
                         MotionControllerSetup().activate_pca9685_boards()
+                        self.is_activated = True
                         MotionControllerSetup().activate_servos()
                         MotionControllerLegsMoves().rest_position()
                         MotionControllerArmMoves().rest_position()
@@ -144,6 +145,7 @@ class MotionController:
                     MotionControllerArmMoves().rest_position()
                     time.sleep(0.5)
                     MotionControllerSetup().deactivate_pca9685_boards()
+                    self.is_activated = False
 
             except Exception as e:
                 log.error('Unknown problem while processing the queue of the motion controller')
