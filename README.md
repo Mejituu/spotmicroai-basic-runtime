@@ -21,3 +21,6 @@ Visit the project website for more
 ###### TODO
 On boot, if someone press a button before press start, show the error properly in the log and screen of spotmicro
 
+## Other peoples builds!
+
+* @Mike R from slack, build the more advacned software: https://github.com/mike4192/spotMicro -> https://www.youtube.com/watch?v=S-uzWG9Z-5E
